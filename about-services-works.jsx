@@ -38,6 +38,17 @@ const About = () => (
       </div>
     </div>
 
+    <div className="about-scenes">
+      <div className="about-scene photo-slot" role="img" aria-label="現場で働く大内氏の写真（予定地）">
+        <span className="photo-slot-kicker">Photo — On Site 01</span>
+        <span className="photo-slot-label">厨房・カウンター越しの姿</span>
+      </div>
+      <div className="about-scene photo-slot" role="img" aria-label="クライアントと打ち合わせる姿の写真（予定地）">
+        <span className="photo-slot-kicker">Photo — On Site 02</span>
+        <span className="photo-slot-label">経営者との対話風景</span>
+      </div>
+    </div>
+
     <div className="career">
       <div className="career-title">
         <span className="en">Career</span>
@@ -68,6 +79,7 @@ const SERVICES = [
     note: '最低契約期間 6ヶ月',
     desc: '月次・週次で経営の隣に立ち、意思決定と実行をともに。孤独な判断を、灯りのあるものに変える基幹サービスです。',
     items: ['経営戦略', 'ブランド構築', 'SNS戦略', '人事・組織', 'IT・DX'],
+    photoLabel: '月次定例の机上・資料',
   },
   {
     num: 'ii.',
@@ -77,6 +89,7 @@ const SERVICES = [
     note: 'スコープに応じてご提案',
     desc: '単発の制作・構築プロジェクト。「作る」だけで終わらせず、「回る」ところまで一貫して設計します。',
     items: ['HP制作', 'ブランドデザイン一式', '地域コンテンツ制作', '業務マニュアル整備'],
+    photoLabel: '制作物のマクロ写真',
   },
   {
     num: 'iii.',
@@ -86,6 +99,7 @@ const SERVICES = [
     note: '単発・オンライン可',
     desc: '「まず話を聞いてほしい」方に。現状整理と、次の一歩のための視点提供を行います。',
     items: ['現状整理', '意思決定サポート', '壁打ち', '専門家紹介'],
+    photoLabel: 'カフェでの対話風景',
   },
 ];
 
@@ -99,6 +113,10 @@ const Services = () => (
       {SERVICES.map((s, i) => (
         <div className="svc-row" key={i}>
           <div className="svc-left">
+            <div className="svc-photo photo-slot" role="img" aria-label={`${s.title}の情景写真（予定地）`}>
+              <span className="photo-slot-kicker">Photo — {s.en}</span>
+              <span className="photo-slot-label">{s.photoLabel}</span>
+            </div>
             <span className="svc-num">{s.num}</span>
             <h3 className="svc-title">{s.title}</h3>
             <span className="svc-title-en">{s.en}</span>
@@ -137,11 +155,11 @@ const Services = () => (
 );
 
 const CLIENTS = [
-  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期' },
-  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ' },
-  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社' },
-  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福' },
+  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotLabel: '店舗 / 料理' },
+  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotLabel: '店舗 / 料理' },
+  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotLabel: '活動風景' },
+  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotLabel: '店舗 / 料理' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotLabel: '店舗 / 料理' },
 ];
 const SAMPLES = [
   { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.jpg', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
@@ -149,10 +167,10 @@ const SAMPLES = [
   { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.jpg', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
 ];
 const COMMISSIONS = [
-  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。' },
-  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。' },
-  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。' },
-  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。' },
+  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoLabel: '製造現場 / 出店風景' },
+  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。', photoLabel: 'イベント当日の情景' },
+  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。', photoLabel: 'ブルワリー店内 / 料理' },
+  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。', photoLabel: '新店オープン時の一枚' },
 ];
 
 const Works = () => {
@@ -183,6 +201,9 @@ const Works = () => {
                       ) : (
                         <span className="client-chip-name">{c.name}</span>
                       )}
+                    </div>
+                    <div className="client-chip-shot photo-slot" role="img" aria-label={`${c.name}の店舗写真（予定地）`}>
+                      <span className="photo-slot-label">{c.shotLabel || '店舗 / 料理'}</span>
                     </div>
                     <div className="client-chip-store">{c.name}</div>
                     <div className="client-chip-company">{c.company} 様</div>
@@ -215,6 +236,10 @@ const Works = () => {
           <div className="commissions">
             {COMMISSIONS.map((c, i) => (
               <div className="comm-row" key={i}>
+                <div className="comm-photo photo-slot" role="img" aria-label={`${c.title}の情景写真（予定地）`}>
+                  <span className="photo-slot-kicker">Photo — Commission {String(i + 1).padStart(2, '0')}</span>
+                  <span className="photo-slot-label">{c.photoLabel}</span>
+                </div>
                 <div className="comm-idx">No. {String(i + 1).padStart(2, '0')}</div>
                 <div className="comm-title">{c.title}</div>
                 <div className="comm-body">{c.body}</div>
@@ -275,10 +300,10 @@ const Voice = () => (
     <div className="voice-list">
       {VOICES.map((v, i) => (
         <div className="voice-card" key={i}>
-          <div className="voice-card-photo">
+          <div className={`voice-card-photo ${v.img ? '' : 'photo-slot photo-slot--square'}`} role="img" aria-label={`${v.name} の顔写真 / 店舗写真（予定地）`}>
             {v.img
               ? <img src={v.img} alt={v.name} className="voice-card-img"/>
-              : <span className="voice-card-initial">{v.name.charAt(0)}</span>
+              : <span className="photo-slot-label">顔写真 / 店舗</span>
             }
           </div>
           <div className="voice-card-body">

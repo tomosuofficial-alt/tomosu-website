@@ -102,6 +102,10 @@ const Contact = () => {
             初回ヒアリングは無料です。「まだ課題がはっきりしていない」段階でも構いません。
             現状を整理し、TOMOSU. がお役に立てるか・立てないかを、フラットに考えるところから始めましょう。
           </p>
+          <div className="contact-photo photo-slot" role="img" aria-label="対話風景の写真（予定地）">
+            <span className="photo-slot-kicker">Photo — Dialogue</span>
+            <span className="photo-slot-label">経営者との対話 / カフェでのヒアリング</span>
+          </div>
         </div>
 
         <div className="contact-grid">
