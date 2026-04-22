@@ -1552,6 +1552,7 @@ section { position: relative; }
   display: grid;
   gap: 16px;
 }
+.footer-list li { font-size: 14px; }
 .footer-list a {
   color: rgba(255,255,255,0.75);
   font-size: 13px;
