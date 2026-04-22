@@ -39,13 +39,11 @@ const About = () => (
     </div>
 
     <div className="about-scenes">
-      <div className="about-scene photo-slot" role="img" aria-label="現場で働く大内氏の写真（予定地）">
-        <span className="photo-slot-kicker">Photo — On Site 01</span>
-        <span className="photo-slot-label">厨房・カウンター越しの姿</span>
+      <div className="about-scene photo-slot">
+        <img src="assets/about/about-onsite-01-kitchen.jpg" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
       </div>
-      <div className="about-scene photo-slot" role="img" aria-label="クライアントと打ち合わせる姿の写真（予定地）">
-        <span className="photo-slot-kicker">Photo — On Site 02</span>
-        <span className="photo-slot-label">経営者との対話風景</span>
+      <div className="about-scene photo-slot">
+        <img src="assets/about/about-onsite-02-dialogue.jpg" alt="経営者との対話風景" className="photo-slot-img"/>
       </div>
     </div>
 
@@ -79,7 +77,7 @@ const SERVICES = [
     note: '最低契約期間 6ヶ月',
     desc: '月次・週次で経営の隣に立ち、意思決定と実行をともに。孤独な判断を、灯りのあるものに変える基幹サービスです。',
     items: ['経営戦略', 'ブランド構築', 'SNS戦略', '人事・組織', 'IT・DX'],
-    photoLabel: '月次定例の机上・資料',
+    photoImg: 'assets/services/service-01-advisory-desk.jpg',
   },
   {
     num: 'ii.',
@@ -89,7 +87,7 @@ const SERVICES = [
     note: 'スコープに応じてご提案',
     desc: '単発の制作・構築プロジェクト。「作る」だけで終わらせず、「回る」ところまで一貫して設計します。',
     items: ['HP制作', 'ブランドデザイン一式', '地域コンテンツ制作', '業務マニュアル整備'],
-    photoLabel: '制作物のマクロ写真',
+    photoImg: 'assets/services/service-02-project-collateral.jpg',
   },
   {
     num: 'iii.',
@@ -99,7 +97,7 @@ const SERVICES = [
     note: '単発・オンライン可',
     desc: '「まず話を聞いてほしい」方に。現状整理と、次の一歩のための視点提供を行います。',
     items: ['現状整理', '意思決定サポート', '壁打ち', '専門家紹介'],
-    photoLabel: 'カフェでの対話風景',
+    photoImg: 'assets/services/service-03-spot-cafe.jpg',
   },
 ];
 
@@ -113,9 +111,8 @@ const Services = () => (
       {SERVICES.map((s, i) => (
         <div className="svc-row" key={i}>
           <div className="svc-left">
-            <div className="svc-photo photo-slot" role="img" aria-label={`${s.title}の情景写真（予定地）`}>
-              <span className="photo-slot-kicker">Photo — {s.en}</span>
-              <span className="photo-slot-label">{s.photoLabel}</span>
+            <div className="svc-photo photo-slot">
+              <img src={s.photoImg} alt={s.title} className="photo-slot-img"/>
             </div>
             <span className="svc-num">{s.num}</span>
             <h3 className="svc-title">{s.title}</h3>
@@ -155,11 +152,11 @@ const Services = () => (
 );
 
 const CLIENTS = [
-  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotLabel: '店舗 / 料理' },
-  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotLabel: '店舗 / 料理' },
-  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotLabel: '活動風景' },
-  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotLabel: '店舗 / 料理' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotLabel: '店舗 / 料理' },
+  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg' },
+  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.jpg' },
+  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg' },
+  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg' },
 ];
 const SAMPLES = [
   { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.jpg', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
@@ -167,10 +164,10 @@ const SAMPLES = [
   { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.jpg', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
 ];
 const COMMISSIONS = [
-  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoLabel: '製造現場 / 出店風景' },
-  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。', photoLabel: 'イベント当日の情景' },
-  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。', photoLabel: 'ブルワリー店内 / 料理' },
-  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。', photoLabel: '新店オープン時の一枚' },
+  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoImg: 'assets/commission/commission-01-bento.jpg' },
+  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。', photoImg: 'assets/commission/commission-02-event.jpg' },
+  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。', photoImg: 'assets/commission/commission-03-kirizumi-brewery.jpg' },
+  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。', photoImg: 'assets/commission/commission-04-new-shop.jpg' },
 ];
 
 const Works = () => {
@@ -202,8 +199,8 @@ const Works = () => {
                         <span className="client-chip-name">{c.name}</span>
                       )}
                     </div>
-                    <div className="client-chip-shot photo-slot" role="img" aria-label={`${c.name}の店舗写真（予定地）`}>
-                      <span className="photo-slot-label">{c.shotLabel || '店舗 / 料理'}</span>
+                    <div className="client-chip-shot photo-slot">
+                      <img src={c.shotImg} alt={`${c.name} 店舗`} className="photo-slot-img"/>
                     </div>
                     <div className="client-chip-store">{c.name}</div>
                     <div className="client-chip-company">{c.company} 様</div>
@@ -236,9 +233,8 @@ const Works = () => {
           <div className="commissions">
             {COMMISSIONS.map((c, i) => (
               <div className="comm-row" key={i}>
-                <div className="comm-photo photo-slot" role="img" aria-label={`${c.title}の情景写真（予定地）`}>
-                  <span className="photo-slot-kicker">Photo — Commission {String(i + 1).padStart(2, '0')}</span>
-                  <span className="photo-slot-label">{c.photoLabel}</span>
+                <div className="comm-photo photo-slot">
+                  <img src={c.photoImg} alt={c.title} className="photo-slot-img"/>
                 </div>
                 <div className="comm-idx">No. {String(i + 1).padStart(2, '0')}</div>
                 <div className="comm-title">{c.title}</div>
@@ -259,6 +255,7 @@ const VOICES = [
     company: '株式会社千福',
     role: '代表取締役',
     cat: 'Izakaya',
+    img: 'assets/voice/senpuku.jpg',
   },
   {
     quote: 'メニューや販促物のデザインはほぼお任せしていて、週一で店長代理として現場にも入ってもらっています。デザインだけ・相談だけじゃなく、実際にホールに立つ人が店舗運営の顧問をしてくれる。この距離感は他にないと思います。',
@@ -266,6 +263,7 @@ const VOICES = [
     company: '株式会社二期',
     role: '飲食事業部統括',
     cat: 'Diner',
+    img: 'assets/voice/niki-diner.jpg',
   },
   {
     quote: '弁当製造の調理を任せられるだけでも助かっているのに、大型イベントの出店までサポートしてもらっています。先日の肉フェスでは二日間で約300万円の売上を達成。調理スタッフの配置からオペレーション、レイアウトまで一緒に設計してもらえたからこその結果です。',
@@ -273,6 +271,7 @@ const VOICES = [
     company: '株式会社DELIENTZ',
     role: '代表取締役',
     cat: 'Bistro',
+    img: 'assets/voice/bistro-knocks.jpg',
   },
   {
     quote: 'SNS運用を丸ごとお願いしていて、月2回は店舗に来てスタッフと直接やり取りしてくれる。現場の空気を知っている人が発信するから、投稿に嘘がない。お客様からも「Instagramを見て来ました」という声が増えました。',
@@ -280,6 +279,7 @@ const VOICES = [
     company: '株式会社サンフラワー',
     role: '飲食事業部統括',
     cat: 'Cafe',
+    img: 'assets/voice/mz-cafe.jpg',
   },
   {
     quote: 'Webサイト制作のサポートに加えて、地域活性化につながる地図の制作やデータ入力まで柔軟に対応してくれる。こちらの「やりたい」をそのまま受け止めて、実務レベルで手を動かしてくれるのが本当にありがたいです。',
@@ -287,6 +287,7 @@ const VOICES = [
     company: 'LOCAL POWER株式会社',
     role: '代表取締役',
     cat: 'Regional Brand',
+    img: 'assets/voice/localpower.jpg',
   },
 ];
 

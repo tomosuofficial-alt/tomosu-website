@@ -226,9 +226,8 @@ const Philosophy = () => (
           それが、私たちの仕事の芯です。
         </p>
       </div>
-      <div className="phil-photo photo-slot photo-slot--dark" role="img" aria-label="夜の街に灯る小さな店の写真（予定地）">
-        <span className="photo-slot-kicker">Photo — Scene 01</span>
-        <span className="photo-slot-label">夜の街／灯りのある小店</span>
+      <div className="phil-photo photo-slot photo-slot--dark">
+        <img src="assets/scenes/philosophy-night-shop.jpg" alt="夜の群馬の裏道に灯る小さな店" className="photo-slot-img"/>
       </div>
       <div className="phil-sign">— Tomosu.</div>
     </div>
