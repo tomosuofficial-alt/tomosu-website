@@ -291,12 +291,14 @@ section { position: relative; }
 .hero-title {
   font-family: var(--serif-jp);
   font-weight: 300;
-  font-size: clamp(48px, 7.2vw, 104px);
+  font-size: clamp(36px, 7.5vw, 104px);
   letter-spacing: 0.08em;
   line-height: 1.5;
   color: var(--ink);
   margin-bottom: 56px;
   max-width: 1100px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 .hero-sub {
   font-family: var(--serif-jp);
@@ -2013,4 +2015,125 @@ section { position: relative; }
   .phil-photo { margin: 56px auto 40px; }
   .comm-photo { aspect-ratio: 16 / 8; margin-bottom: 20px; }
   .contact-photo { aspect-ratio: 16 / 9; margin-top: 40px; }
+}
+
+/* ============ Phone (≤ 640px) ============
+   Focused fixes for handheld portrait viewports.
+   Keeps desktop/tablet untouched. */
+@media (max-width: 640px) {
+  /* Paddings */
+  .nav-inner, .hero-inner, .about-grid, .career, .svc-row, .works-head, .works-tabs, .works-panel, .flow-inner, .blog-inner, .contact-inner, .footer-inner { padding-left: 20px; padding-right: 20px; }
+  .voice-header, .voice-list, .voice-note { padding-left: 20px; padding-right: 20px; }
+
+  /* MorphLogo: switch sizing from vh (tall phones) to vw so logo
+     doesn't consume half the screen vertically. Also shrink bounds. */
+  .morph-logo {
+    --top-hero: 13vh;
+    --size-hero: clamp(68px, 18vw, 110px);
+    --size-nav: 24px;
+    --left-nav: 20px;
+  }
+
+  /* Hero typography — narrower viewport needs smaller kicker & title */
+  .hero-inner { padding-top: 20vh; }
+  .hero-meta { font-size: 11px; letter-spacing: 0.18em; margin-bottom: 48px; gap: 14px; }
+  .hero-meta .rule { width: 36px; }
+  .hero-title { font-size: 34px; letter-spacing: 0.06em; margin-bottom: 40px; line-height: 1.55; }
+  .hero-sub { font-size: 14px; line-height: 2.0; margin-bottom: 56px; }
+  .cta { font-size: 13px; letter-spacing: 0.16em; }
+
+  /* Hero footer — compact two-line stacked meta */
+  .hero-foot { margin-top: 48px; padding-top: 24px; }
+  .hero-foot .left, .hero-foot .right { font-size: 11px; letter-spacing: 0.18em; line-height: 1.8; }
+
+  /* Section paddings */
+  .sec, .sec-sm, .about, .services, .works, .voice, .flow, .blog, .contact, .philosophy, .diff { padding: 88px 0; }
+  .hero { padding: 80px 0 60px; }
+
+  /* Philosophy body */
+  .phil-vision { font-size: 28px !important; line-height: 1.55; letter-spacing: 0.06em; }
+  .phil-body p { font-size: 13px; line-height: 2.1; }
+
+  /* About */
+  .about-title { font-size: 22px; letter-spacing: 0.06em; line-height: 1.7; }
+  .about-name { font-size: 18px; }
+  .about-body p { font-size: 13px; line-height: 2.1; }
+  .career-row { grid-template-columns: 56px 1fr; gap: 16px; }
+  .career-year { font-size: 14px; }
+  .career-body .role { font-size: 14px; }
+
+  /* Sections titles */
+  .sec-title { font-size: 26px !important; letter-spacing: 0.06em; line-height: 1.6; }
+  .phil-num, .section-number { font-size: 11px; }
+
+  /* Services */
+  .svc-row { padding: 72px 20px; gap: 40px; }
+  .svc-title { font-size: 22px; }
+  .svc-price { font-size: 26px; }
+  .svc-desc { font-size: 13px; line-height: 2.1; }
+  .svc-items li { font-size: 13px; }
+
+  /* Works */
+  .works-tabs { gap: 20px; }
+  .works-tab { font-size: 12px; letter-spacing: 0.14em; }
+  .client-chip { padding: 0 28px; }
+  .client-chip-name { font-size: 18px; }
+  .client-chip-logo { height: 86px; }
+  .client-chip-img { max-height: 86px; max-width: 140px; }
+  .client-chip-shot { width: 118px; }
+  .client-chip-store { font-size: 13px; margin-top: 16px; }
+  .client-chip-company { font-size: 11px; }
+
+  /* Voice cards */
+  .voice-card { grid-template-columns: 72px 1fr; gap: 20px; padding: 36px 0; }
+  .voice-card-photo { width: 72px; height: 72px; }
+  .voice-card-cat { font-size: 11px; margin-bottom: 14px; }
+  .voice-card-quote { font-size: 14px; line-height: 2.1; letter-spacing: 0.06em; margin-bottom: 18px; }
+  .voice-card-name { font-size: 14px; }
+  .voice-card-role { font-size: 11px; }
+
+  /* Commissions */
+  .comm-row { gap: 14px; padding: 28px 0; }
+  .comm-title { font-size: 15px; }
+  .comm-body { font-size: 13px; line-height: 2.0; }
+
+  /* Flow */
+  .flow-row { grid-template-columns: 44px 1fr; gap: 20px; }
+  .flow-num { font-size: 18px; }
+  .flow-title { font-size: 16px; }
+  .flow-desc { font-size: 13px; line-height: 2.0; }
+  .flow-meta { font-size: 11px; }
+
+  /* Blog */
+  .blog-row { grid-template-columns: 84px 1fr; gap: 14px; padding: 20px 0; }
+  .blog-date { font-size: 11px; }
+  .blog-title { font-size: 14px; line-height: 1.8; }
+
+  /* Contact */
+  .contact-title { font-size: 28px !important; letter-spacing: 0.06em; }
+  .contact-lede { font-size: 13px; line-height: 2.0; }
+  .form-input, .form-select, .form-textarea { font-size: 14px; }
+  .form-submit { font-size: 14px; letter-spacing: 0.14em; padding: 16px 24px; }
+
+  /* Footer */
+  .footer { padding: 80px 0 40px; }
+  .footer-tag { font-size: 13px; line-height: 1.9; }
+  .footer-list li { font-size: 13px; }
+  .footer-list a { font-size: 12px; }
+  .footer-bottom { font-size: 11px; gap: 6px; flex-direction: column; align-items: flex-start; }
+
+  /* Font switcher — further shrink, keep out of the way */
+  .font-switcher { right: 10px; bottom: 10px; }
+  .font-switcher-toggle { padding: 10px 12px; }
+  .fs-kicker { font-size: 9px; }
+  .fs-current { font-size: 12px; }
+}
+
+/* ============ Phone very narrow (≤ 380px) — iPhone SE / mini ============ */
+@media (max-width: 380px) {
+  .hero-title { font-size: 30px; }
+  .phil-vision { font-size: 24px !important; }
+  .sec-title { font-size: 22px !important; }
+  .contact-title { font-size: 24px !important; }
+  .morph-logo { --size-hero: clamp(60px, 20vw, 90px); }
 }
