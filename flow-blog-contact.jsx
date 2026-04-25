@@ -103,7 +103,7 @@ const Contact = () => {
             現状を整理し、TOMOSU. がお役に立てるか・立てないかを、フラットに考えるところから始めましょう。
           </p>
           <div className="contact-photo photo-slot">
-            <img src="assets/contact/contact-dialogue.jpg" alt="初回ヒアリングの対話風景" className="photo-slot-img"/>
+            <img src="assets/contact/contact-dialogue.png?v=2" alt="初回ヒアリングの対話風景" className="photo-slot-img"/>
           </div>
         </div>
 

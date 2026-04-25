@@ -40,7 +40,7 @@ const About = () => (
 
     <div className="about-scenes">
       <div className="about-scene photo-slot">
-        <img src="assets/about/about-onsite-01-kitchen.jpg" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
+        <img src="assets/about/about-onsite-01-kitchen.png?v=2" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
       </div>
       <div className="about-scene photo-slot">
         <img src="assets/about/about-onsite-02-dialogue.jpg" alt="経営者との対話風景" className="photo-slot-img"/>
@@ -152,11 +152,11 @@ const Services = () => (
 );
 
 const CLIENTS = [
-  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg' },
-  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.jpg' },
+  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg?v=2' },
+  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.png?v=2' },
   { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg' },
-  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg' },
+  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg?v=2' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2' },
 ];
 const SAMPLES = [
   { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.png?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
@@ -271,7 +271,7 @@ const VOICES = [
     company: '株式会社DELIENTZ',
     role: '代表取締役',
     cat: 'Bistro',
-    img: 'assets/voice/bistro-knocks.jpg',
+    img: 'assets/voice/bistro-knocks.png?v=2',
   },
   {
     quote: 'SNS運用を丸ごとお願いしていて、月2回は店舗に来てスタッフと直接やり取りしてくれる。現場の空気を知っている人が発信するから、投稿に嘘がない。お客様からも「Instagramを見て来ました」という声が増えました。',
@@ -287,7 +287,7 @@ const VOICES = [
     company: 'LOCAL POWER株式会社',
     role: '代表取締役',
     cat: 'Regional Brand',
-    img: 'assets/voice/localpower.jpg',
+    img: 'assets/voice/localpower.png?v=2',
   },
 ];
 

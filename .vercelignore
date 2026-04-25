@@ -1,0 +1,8 @@
+.DS_Store
+**/.DS_Store
+uploads/
+debug-*.png
+shot-*.png
+image-prompts.md
+.git
+node_modules

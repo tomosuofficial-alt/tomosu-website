@@ -2002,7 +2002,7 @@ section { position: relative; }
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background-image: url('assets/scenes/philosophy-night-shop.jpg');
+  background-image: url('assets/scenes/philosophy-night-shop.png?v=2');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
