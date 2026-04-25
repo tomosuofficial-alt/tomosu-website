@@ -206,32 +206,65 @@ const Hero = () => (
   </section>
 );
 
-const Philosophy = () => (
-  <section id="philosophy" className="philosophy">
-    <div className="phil-inner">
-      <span className="phil-num">I. — Philosophy</span>
-      <div className="phil-rule"></div>
-      <h2 className="phil-vision">
-        経営者の一歩を、<br/>灯りに変えるために。
-      </h2>
-      <div className="phil-body">
-        <p>
-          TOMOSU.（灯す）という屋号には、<br/>
-          経営という暗い道を歩む方の、次の一歩を照らす存在でありたい——<br/>
-          その願いを込めています。
-        </p>
-        <p>
-          机上の戦略屋でも、請負の制作屋でもなく、<br/>
-          経営者の隣で、確かな灯りとして在り続けること。<br/>
-          それが、私たちの仕事の芯です。
-        </p>
+/* Philosophy photo: scroll-driven illumination.
+   --lit goes 0 (closed/dark shop) → 1 (warm noren glow on) as the photo
+   moves up through the viewport. */
+const Philosophy = () => {
+  const photoRef = React.useRef(null);
+  React.useEffect(() => {
+    const update = () => {
+      const el = photoRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      // Start lighting when the photo's top crosses ~85% from the top
+      // of the viewport; fully lit when it reaches ~30%.
+      const start = vh * 0.85;
+      const end = vh * 0.30;
+      const raw = (start - rect.top) / (start - end);
+      const p = Math.max(0, Math.min(1, raw));
+      // Smoothstep — gentle ease-in-out
+      const eased = p * p * (3 - 2 * p);
+      el.style.setProperty('--lit', eased);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+  return (
+    <section id="philosophy" className="philosophy">
+      <div className="phil-inner">
+        <span className="phil-num">I. — Philosophy</span>
+        <div className="phil-rule"></div>
+        <h2 className="phil-vision">
+          経営者の一歩を、<br/>灯りに変えるために。
+        </h2>
+        <div className="phil-body">
+          <p>
+            TOMOSU.（灯す）という屋号には、<br/>
+            経営という暗い道を歩む方の、次の一歩を照らす存在でありたい——<br/>
+            その願いを込めています。
+          </p>
+          <p>
+            机上の戦略屋でも、請負の制作屋でもなく、<br/>
+            経営者の隣で、確かな灯りとして在り続けること。<br/>
+            それが、私たちの仕事の芯です。
+          </p>
+        </div>
+        <div ref={photoRef} className="phil-photo phil-photo--lit photo-slot photo-slot--dark" style={{ ['--lit']: 0 }}>
+          <img src="assets/scenes/philosophy-night-shop.jpg" alt="夜の群馬の裏道に灯る小さな店" className="photo-slot-img"/>
+          <div className="phil-photo__dim" aria-hidden="true"></div>
+          <div className="phil-photo__lights" aria-hidden="true"></div>
+          <div className="phil-photo__glow" aria-hidden="true"></div>
+        </div>
+        <div className="phil-sign">— Tomosu.</div>
       </div>
-      <div className="phil-photo photo-slot photo-slot--dark">
-        <img src="assets/scenes/philosophy-night-shop.jpg" alt="夜の群馬の裏道に灯る小さな店" className="photo-slot-img"/>
-      </div>
-      <div className="phil-sign">— Tomosu.</div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 Object.assign(window, { Nav, MorphLogo, Hero, Philosophy, scrollToId, NAV_ITEMS });

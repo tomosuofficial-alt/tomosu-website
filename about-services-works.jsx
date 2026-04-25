@@ -10,7 +10,7 @@ const About = () => (
   <section id="about" className="about">
     <div className="about-grid">
       <div className="about-portrait">
-        <img src="assets/profile.png" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img"/>
+        <img src="assets/profile.png?v=3" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img"/>
         <div className="label">Takashi Ouchi</div>
       </div>
       <div className="about-content">
@@ -159,9 +159,9 @@ const CLIENTS = [
   { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg' },
 ];
 const SAMPLES = [
-  { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.jpg', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
-  { title: 'コーポレートサイト制作', en: 'Corporate Web', img: 'assets/works/corporate-web.jpg', desc: '伝えるべき価値を、読みやすく、静かに届ける設計。立ち上げ後の運用まで伴走します。' },
-  { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.jpg', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
+  { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.png?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
+  { title: 'コーポレートサイト制作', en: 'Corporate Web', img: 'assets/works/corporate-web.png?v=2', desc: '伝えるべき価値を、読みやすく、静かに届ける設計。立ち上げ後の運用まで伴走します。' },
+  { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.png?v=2', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
 ];
 const COMMISSIONS = [
   { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoImg: 'assets/commission/commission-01-bento.jpg' },
