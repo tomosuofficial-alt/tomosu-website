@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Journal — TOMOSU.</title>
+
+<meta name="description" content="TOMOSU. のJournal記事"/>
+<meta name="author" content="大内 嵩志 / Takashi Ouchi"/>
+<meta name="theme-color" content="#FAFAF7"/>
+<meta name="robots" content="index, follow"/>
+
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="TOMOSU."/>
+<meta property="og:title" content="Journal — TOMOSU."/>
+<meta property="og:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
+<meta property="og:locale" content="ja_JP"/>
+
+<link rel="icon" href="assets/icon.png" type="image/png"/>
+<link rel="apple-touch-icon" href="assets/icon.png"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css?v=18"/>
+</head>
+<body class="legal-page">
+  <header class="legal-header">
+    <div class="legal-header-inner">
+      <a href="/" class="legal-logo" aria-label="TOMOSU. トップへ戻る">
+        <img src="assets/logo-dark.png" alt="TOMOSU."/>
+      </a>
+      <a href="/journal" class="legal-back">← Journal 一覧へ</a>
+    </div>
+  </header>
+
+  <main class="legal-main">
+    <div id="journal-content">
+      <div class="journal-loading">記事を読み込んでいます ...</div>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div class="legal-footer-top">
+        <a href="/" class="legal-footer-logo" aria-label="TOMOSU. トップへ戻る">
+          <img src="assets/logo-light.png" alt="TOMOSU."/>
+        </a>
+        <nav class="legal-footer-links">
+          <a href="/">Home</a>
+          <a href="/journal">Journal</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/tokutei">特定商取引法</a>
+          <a href="mailto:info@tomosu-inc.com">Contact</a>
+        </nav>
+      </div>
+      <div class="legal-footer-bottom">
+        <span>© <script>document.write(new Date().getFullYear())</script> Tomosu.</span>
+        <span>Takashi Ouchi — Founder</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (async () => {
+      const content = document.getElementById('journal-content');
+      const path = window.location.pathname;
+      const m = path.match(/^\/journal\/(.+?)\/?$/);
+      const slug = m ? decodeURIComponent(m[1]) : '';
+
+      const formatDate = (iso) => {
+        if (!iso) return '— —';
+        const d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+      };
+      const escapeHtml = (s) => String(s ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+      if (!slug) {
+        content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+        return;
+      }
+
+      try {
+        const r = await fetch(`/api/journal/${encodeURIComponent(slug)}`);
+        if (r.status === 404) {
+          content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+          return;
+        }
+        if (!r.ok) throw new Error('fetch failed');
+        const item = await r.json();
+
+        document.title = `${item.title} — TOMOSU. Journal`;
+        const descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta && item.excerpt) descMeta.setAttribute('content', item.excerpt);
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', `${item.title} — TOMOSU.`);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (item.excerpt) {
+          if (ogDesc) ogDesc.setAttribute('content', item.excerpt);
+          else {
+            const m2 = document.createElement('meta');
+            m2.setAttribute('property', 'og:description');
+            m2.setAttribute('content', item.excerpt);
+            document.head.appendChild(m2);
+          }
+        }
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', `https://tomosu-inc.com/journal/${item.slug}`);
+        if (item.coverImageUrl) {
+          const ogImg = document.querySelector('meta[property="og:image"]');
+          if (ogImg) ogImg.setAttribute('content', item.coverImageUrl);
+        }
+
+        content.innerHTML = `
+          <div class="legal-kicker">— Journal</div>
+          <div class="journal-detail-meta">
+            <span class="date">${escapeHtml(formatDate(item.publishedDate))}</span>
+            <span class="cat">${escapeHtml(item.category || '')}</span>
+          </div>
+          <h1 class="journal-detail-title">${escapeHtml(item.title)}</h1>
+          ${item.author ? `<div class="journal-detail-author">${escapeHtml(item.author)}</div>` : ''}
+          <div class="journal-detail-body">${item.html || ''}</div>
+          <div class="journal-detail-back">
+            <a href="/journal">← 記事一覧へ</a>
+            <a href="/">Tomosu. Home →</a>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        content.innerHTML = '<div class="journal-empty">記事の読み込みに失敗しました</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

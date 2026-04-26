@@ -33,36 +33,74 @@ const Flow = () => (
   </section>
 );
 
-const POSTS = [
-  { date: '2026.04.12', cat: 'Column', title: '経営者は「考える」だけでは救われない。現場で回す視点の必要性。' },
-  { date: '2026.03.28', cat: 'Case Study', title: '地域飲食店のブランド再構築——三ヶ月で客単価が変わった話。' },
-  { date: '2026.03.15', cat: 'News', title: '安中・霧積ブルワリーの業務支援を継続しています。' },
-  { date: '2026.02.20', cat: 'Column', title: '月次顧問という関係性の、本当の価値について。' },
-];
+const formatJournalDate = (iso) => {
+  if (!iso) return '— —';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+};
 
-const Blog = () => (
-  <section id="journal" className="blog">
-    <div className="blog-inner">
-      <div className="blog-head-row">
-        <div>
-          <span className="section-number">VII. — Journal</span>
-          <h2 className="sec-title" style={{ marginTop: 32 }}>経営の現場から、<br/>灯りになる言葉を。</h2>
-        </div>
-        <a className="text-link" onClick={(e) => e.preventDefault()}>すべての記事を見る</a>
-      </div>
-      <div className="blog-list">
-        {POSTS.map((p, i) => (
-          <div className="blog-row" key={i}>
-            <div className="blog-date">{p.date}</div>
-            <div className="blog-cat">{p.cat}</div>
-            <div className="blog-title">{p.title}</div>
-            <div className="blog-more">Read →</div>
+const Blog = () => {
+  const [items, setItems] = React.useState(null);
+  const [error, setError] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch('/api/journal?limit=4')
+      .then((r) => (r.ok ? r.json() : Promise.reject(r)))
+      .then((data) => { if (!cancelled) setItems(data.items || []); })
+      .catch(() => { if (!cancelled) setError(true); });
+    return () => { cancelled = true; };
+  }, []);
+
+  return (
+    <section id="journal" className="blog">
+      <div className="blog-inner">
+        <div className="blog-head-row">
+          <div>
+            <span className="section-number">VII. — Journal</span>
+            <h2 className="sec-title" style={{ marginTop: 32 }}>経営の現場から、<br/>灯りになる言葉を。</h2>
           </div>
-        ))}
+          <a className="text-link" href="/journal">すべての記事を見る</a>
+        </div>
+        <div className="blog-list">
+          {items === null && !error && (
+            <div className="blog-row" style={{ opacity: 0.4, cursor: 'default' }}>
+              <div className="blog-date">— —</div>
+              <div className="blog-cat">Loading</div>
+              <div className="blog-title">記事を読み込んでいます ...</div>
+              <div className="blog-more"></div>
+            </div>
+          )}
+          {error && (
+            <div className="blog-row" style={{ opacity: 0.6, cursor: 'default' }}>
+              <div className="blog-date">— —</div>
+              <div className="blog-cat">—</div>
+              <div className="blog-title">記事の読み込みに失敗しました</div>
+              <div className="blog-more"></div>
+            </div>
+          )}
+          {items && items.length === 0 && !error && (
+            <div className="blog-row" style={{ opacity: 0.6, cursor: 'default' }}>
+              <div className="blog-date">— —</div>
+              <div className="blog-cat">Coming Soon</div>
+              <div className="blog-title">記事を準備しています</div>
+              <div className="blog-more"></div>
+            </div>
+          )}
+          {items && items.map((p) => (
+            <a className="blog-row" key={p.id} href={`/journal/${p.slug}`}>
+              <div className="blog-date">{formatJournalDate(p.publishedDate)}</div>
+              <div className="blog-cat">{p.category}</div>
+              <div className="blog-title">{p.title}</div>
+              <div className="blog-more">Read →</div>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Contact = () => {
   const [form, setForm] = React.useState({ name:'', company:'', email:'', phone:'', type:'', budget:'', message:'', agree: false });
@@ -216,7 +254,7 @@ const Contact = () => {
                 <label className="form-agree">
                   <input type="checkbox" checked={form.agree} onChange={set('agree')}/>
                   <span>
-                    <a onClick={(e) => e.preventDefault()}>プライバシーポリシー</a>にご同意のうえ、送信します。
+                    <a href="/privacy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>にご同意のうえ、送信します。
                     {errors.agree && <div className="form-err" style={{ marginTop: 6 }}>{errors.agree}</div>}
                   </span>
                 </label>
@@ -263,6 +301,13 @@ const Footer = () => (
             <li><a href="mailto:info@tomosu-inc.com">info@tomosu-inc.com</a></li>
             <li>群馬県中心に関東全域</li>
             <li>オンライン全国対応</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <ul className="footer-list">
+            <li><a href="/privacy">プライバシーポリシー</a></li>
+            <li><a href="/tokutei">特定商取引法に基づく表記</a></li>
           </ul>
         </div>
       </div>

@@ -1,5 +1,7 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/TOMOSU Corporate Site.html" }
+    { "source": "/", "destination": "/TOMOSU Corporate Site.html" },
+    { "source": "/journal/:slug", "destination": "/journal-detail.html" }
   ]
 }
