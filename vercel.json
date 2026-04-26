@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/TOMOSU Corporate Site.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/tokutei", "destination": "/tokutei.html" },
     { "source": "/journal", "destination": "/journal.html" },
