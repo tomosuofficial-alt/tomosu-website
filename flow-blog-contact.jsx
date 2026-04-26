@@ -76,7 +76,7 @@ const Contact = () => {
     if (errors[k]) setErrors({ ...errors, [k]: null });
   };
 
-  const submit = (ev) => {
+  const submit = async (ev) => {
     ev.preventDefault();
     const e = {};
     if (!form.name.trim()) e.name = 'ご担当者様のお名前をご入力ください';
@@ -88,8 +88,30 @@ const Contact = () => {
     if (!form.agree) e.agree = 'プライバシーポリシーへのご同意が必要です';
     setErrors(e);
     if (Object.keys(e).length) return;
+
     setSubmitting(true);
-    setTimeout(() => { setSubmitting(false); setDone(true); }, 800);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSubmitting(false);
+        if (data.errors) {
+          setErrors(data.errors);
+        } else {
+          setErrors({ submit: data.error || '送信に失敗しました。時間をおいて再度お試しください。' });
+        }
+        return;
+      }
+      setSubmitting(false);
+      setDone(true);
+    } catch (err) {
+      setSubmitting(false);
+      setErrors({ submit: 'ネットワークエラー、しばらくしてから再度お試しください。' });
+    }
   };
 
   return (
@@ -111,7 +133,7 @@ const Contact = () => {
           <div className="contact-info">
             <div className="info-row">
               <span className="k">Email</span>
-              <span className="v"><a href="mailto:tomosu.official@gmail.com">tomosu.official@gmail.com</a></span>
+              <span className="v"><a href="mailto:info@tomosu-inc.com">info@tomosu-inc.com</a></span>
             </div>
             <div className="info-row">
               <span className="k">Base</span>
@@ -134,7 +156,7 @@ const Contact = () => {
                 <h3>お問い合わせ、確かに承りました。</h3>
                 <p>
                   内容を拝読のうえ、原則二営業日以内に<br/>
-                  tomosu.official@gmail.com よりご返信いたします。<br/>
+                  info@tomosu-inc.com よりご返信いたします。<br/>
                   灯りを灯す準備を、こちらで整えてお待ちしております。
                 </p>
               </div>
@@ -142,29 +164,29 @@ const Contact = () => {
               <form className="form" onSubmit={submit} noValidate>
                 <div className="form-row-2">
                   <div className={`form-field ${errors.name ? 'error' : ''}`}>
-                    <div className="form-label"><span className="jp">ご担当者様</span><span className="req">REQUIRED</span></div>
+                    <div className="form-label"><span className="jp">ご担当者様</span><span className="req">必須</span></div>
                     <input className="form-input" value={form.name} onChange={set('name')} placeholder="山田 太郎"/>
                     {errors.name && <div className="form-err">{errors.name}</div>}
                   </div>
                   <div className="form-field">
-                    <div className="form-label"><span className="jp">会社名 / 屋号</span><span className="opt">OPTIONAL</span></div>
+                    <div className="form-label"><span className="jp">会社名 / 屋号</span></div>
                     <input className="form-input" value={form.company} onChange={set('company')} placeholder="株式会社 ◯◯"/>
                   </div>
                 </div>
                 <div className="form-row-2">
                   <div className={`form-field ${errors.email ? 'error' : ''}`}>
-                    <div className="form-label"><span className="jp">メールアドレス</span><span className="req">REQUIRED</span></div>
+                    <div className="form-label"><span className="jp">メールアドレス</span><span className="req">必須</span></div>
                     <input type="email" className="form-input" value={form.email} onChange={set('email')} placeholder="name@example.com"/>
                     {errors.email && <div className="form-err">{errors.email}</div>}
                   </div>
                   <div className="form-field">
-                    <div className="form-label"><span className="jp">電話番号</span><span className="opt">OPTIONAL</span></div>
+                    <div className="form-label"><span className="jp">電話番号</span></div>
                     <input className="form-input" value={form.phone} onChange={set('phone')} placeholder="090-1234-5678"/>
                   </div>
                 </div>
                 <div className="form-row-2">
                   <div className={`form-field ${errors.type ? 'error' : ''}`}>
-                    <div className="form-label"><span className="jp">ご相談内容</span><span className="req">REQUIRED</span></div>
+                    <div className="form-label"><span className="jp">ご相談内容</span><span className="req">必須</span></div>
                     <select className="form-select" value={form.type} onChange={set('type')}>
                       <option value="">お選びください</option>
                       <option value="advisory">顧問コンサルティング</option>
@@ -175,7 +197,7 @@ const Contact = () => {
                     {errors.type && <div className="form-err">{errors.type}</div>}
                   </div>
                   <div className="form-field">
-                    <div className="form-label"><span className="jp">想定ご予算</span><span className="opt">OPTIONAL</span></div>
+                    <div className="form-label"><span className="jp">想定ご予算</span></div>
                     <select className="form-select" value={form.budget} onChange={set('budget')}>
                       <option value="">お選びください</option>
                       <option>〜10万円</option>
@@ -187,7 +209,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className={`form-field ${errors.message ? 'error' : ''}`}>
-                  <div className="form-label"><span className="jp">ご相談内容の詳細</span><span className="req">REQUIRED</span></div>
+                  <div className="form-label"><span className="jp">ご相談内容の詳細</span><span className="req">必須</span></div>
                   <textarea className="form-textarea" value={form.message} onChange={set('message')} placeholder="現状・課題・目指している状態などを、わかる範囲でご記入ください。"/>
                   {errors.message && <div className="form-err">{errors.message}</div>}
                 </div>
@@ -198,6 +220,7 @@ const Contact = () => {
                     {errors.agree && <div className="form-err" style={{ marginTop: 6 }}>{errors.agree}</div>}
                   </span>
                 </label>
+                {errors.submit && <div className="form-err" style={{ marginTop: 16, marginBottom: 8, textAlign: 'center' }}>{errors.submit}</div>}
                 <div className="form-submit-wrap">
                   <button type="submit" className="form-submit" disabled={submitting}>
                     {submitting ? '送信中 ...' : '初回無料ヒアリングを申し込む'}
@@ -237,14 +260,14 @@ const Footer = () => (
         <div>
           <h5>Contact</h5>
           <ul className="footer-list">
-            <li><a href="mailto:tomosu.official@gmail.com">tomosu.official@gmail.com</a></li>
+            <li><a href="mailto:info@tomosu-inc.com">info@tomosu-inc.com</a></li>
             <li>群馬県中心に関東全域</li>
             <li>オンライン全国対応</li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
-        <div>© 2026 Tomosu.</div>
+        <div>© {new Date().getFullYear()} Tomosu.</div>
         <div>Takashi Ouchi — Founder</div>
       </div>
     </div>

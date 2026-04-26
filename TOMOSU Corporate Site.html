@@ -32,7 +32,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css?v=17"/>
 </head>
 <body>
@@ -49,69 +49,6 @@
   <script type="text/babel" src="flow-blog-contact.jsx"></script>
 
   <script type="text/babel">
-    const FONT_OPTIONS = [
-      { id: 'cormorant', label: 'Cormorant Infant',   note: '現在（基準）',   stack: '"Cormorant Infant", "EB Garamond", Georgia, serif' },
-      { id: 'eb',        label: 'EB Garamond',        note: '古典・王道',     stack: '"EB Garamond", Georgia, serif' },
-      { id: 'caslon',    label: 'Libre Caslon Text',  note: '堅実・信頼感',   stack: '"Libre Caslon Text", Georgia, serif' },
-      { id: 'crimson',   label: 'Crimson Pro',        note: '実用・現代的',   stack: '"Crimson Pro", Georgia, serif' },
-      { id: 'playfair',  label: 'Playfair Display',   note: '華やか・主張',   stack: '"Playfair Display", Georgia, serif' },
-      { id: 'instrument',label: 'Instrument Serif',   note: 'モダン・細身',   stack: '"Instrument Serif", Georgia, serif' },
-      { id: 'source',    label: 'Source Serif 4',     note: '端正・金額強い', stack: '"Source Serif 4", Georgia, serif' },
-    ];
-
-    const FontSwitcher = () => {
-      const [current, setCurrent] = React.useState(() => {
-        try { return localStorage.getItem('tomosu.serif-en') || 'cormorant'; } catch(e) { return 'cormorant'; }
-      });
-      const [open, setOpen] = React.useState(false);
-
-      React.useEffect(() => {
-        const opt = FONT_OPTIONS.find(o => o.id === current) || FONT_OPTIONS[0];
-        document.documentElement.style.setProperty('--serif-en', opt.stack);
-        try { localStorage.setItem('tomosu.serif-en', current); } catch(e) {}
-      }, [current]);
-
-      const activeLabel = (FONT_OPTIONS.find(o => o.id === current) || FONT_OPTIONS[0]).label;
-
-      return (
-        <div className={`font-switcher ${open ? 'is-open' : ''}`}>
-          <button
-            type="button"
-            className="font-switcher-toggle"
-            onClick={() => setOpen(v => !v)}
-            aria-expanded={open}
-            aria-label="フォント切替パネル"
-          >
-            <span className="fs-kicker">Font — 書体比較</span>
-            <span className="fs-current">{activeLabel}</span>
-          </button>
-          {open && (
-            <div className="font-switcher-panel" role="radiogroup" aria-label="英字書体の選択">
-              {FONT_OPTIONS.map(opt => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={current === opt.id}
-                  className={`fs-option ${current === opt.id ? 'active' : ''}`}
-                  onClick={() => setCurrent(opt.id)}
-                >
-                  <span className="fs-option-name" style={{ fontFamily: opt.stack, fontStyle: 'italic' }}>
-                    Aa — 2026 · ¥150,000
-                  </span>
-                  <span className="fs-option-meta">
-                    <span className="fs-option-label">{opt.label}</span>
-                    <span className="fs-option-note">{opt.note}</span>
-                  </span>
-                </button>
-              ))}
-              <div className="fs-footnote">選択はブラウザに保存されます</div>
-            </div>
-          )}
-        </div>
-      );
-    };
-
     const App = () => {
       React.useEffect(() => {
         const io = new IntersectionObserver((entries) => {
@@ -140,7 +77,6 @@
           <Contact/>
         </main>
         <Footer/>
-        <FontSwitcher/>
       </>);
     };
     ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
