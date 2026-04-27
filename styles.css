@@ -254,25 +254,21 @@ section { position: relative; }
 }
 
 /* ============ Hero ============ */
-/* Hero is taller than the viewport — the inner block sticks to the top
-   so the page appears frozen until the MorphLogo finishes docking
-   (matches the 0.55vh distance used in nav-hero.jsx). */
 .hero {
-  min-height: 155vh;
-  background: var(--paper);
-  position: relative;
-}
-.hero-inner {
-  position: sticky;
-  top: 0;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: 22vh 64px 100px;
-  width: 100%;
   min-height: 100vh;
+  background: var(--paper);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  position: relative;
+  padding: 140px 0 100px;
+}
+/* Reserved space so oversized MorphLogo (centered at ~26vh) doesn't collide with hero meta/title. */
+.hero-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 22vh 64px 0;
+  width: 100%;
 }
 .hero-meta {
   font-family: var(--serif-en);
