@@ -17,10 +17,14 @@ const scrollToId = (id) => (e) => {
   }
 };
 
-/* MorphLogo: starts HUGE + centered in the hero, then docks into the
-   header on first paint. During the dock animation, the page is locked
-   (no scroll). After it finishes, the logo stays docked and the user
-   can freely scroll the page. We drive it with a CSS variable --p (0..1). */
+/* MorphLogo + opening sequence:
+   1. Hero text is hidden (body.opening-active) and the huge logo holds 700ms
+   2. Logo docks into the header over 1400ms
+   3. body.opening-revealed → hero text fades in with stagger (~1.5s)
+   4. Hold 1500ms so the visitor can read the headline
+   5. Smooth-scroll into Philosophy (#philosophy)
+   6. Unlock — user takes over (any wheel/touch input aborts auto-scroll)
+*/
 const MorphLogo = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
@@ -29,18 +33,54 @@ const MorphLogo = () => {
       if (ref.current) ref.current.style.setProperty('--p', eased);
     };
 
-    // Opening sequence: hold 700ms, then dock over 1400ms.
     const HOLD_MS = 700;
     const ANIM_MS = 1400;
-    const startAt = performance.now() + HOLD_MS;
+    const TEXT_REVEAL_MS = 1500; // wait for hero copy to finish staggering in
+    const READ_HOLD_MS = 1500;   // let the visitor sit with the headline
+    const SCROLL_MS = 1400;      // smooth scroll to philosophy
 
     const prevHtmlOverflow = document.documentElement.style.overflow;
     const prevBodyOverflow = document.body.style.overflow;
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('opening-active');
     window.scrollTo(0, 0);
 
+    const startAt = performance.now() + HOLD_MS;
     let raf = 0;
+    let scrollRaf = 0;
+    let userAborted = false;
+
+    const onUserInput = () => { userAborted = true; };
+    window.addEventListener('wheel', onUserInput, { passive: true });
+    window.addEventListener('touchstart', onUserInput, { passive: true });
+    window.addEventListener('keydown', onUserInput, { passive: true });
+
+    const unlock = () => {
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+    };
+
+    const autoScrollToPhilosophy = () => {
+      const target = document.getElementById('philosophy');
+      if (!target) { unlock(); return; }
+      const startY = window.scrollY;
+      const endY = target.getBoundingClientRect().top + window.scrollY - 20;
+      const t0 = performance.now();
+      const step = (now) => {
+        if (userAborted) { unlock(); return; }
+        const t = Math.min(1, (now - t0) / SCROLL_MS);
+        const eased = easeInOut(t);
+        window.scrollTo(0, startY + (endY - startY) * eased);
+        if (t < 1) {
+          scrollRaf = requestAnimationFrame(step);
+        } else {
+          unlock();
+        }
+      };
+      scrollRaf = requestAnimationFrame(step);
+    };
+
     const tick = (now) => {
       const elapsed = now - startAt;
       if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
@@ -50,16 +90,32 @@ const MorphLogo = () => {
         raf = requestAnimationFrame(tick);
       } else {
         setP(1);
-        document.documentElement.style.overflow = prevHtmlOverflow;
-        document.body.style.overflow = prevBodyOverflow;
+        document.body.classList.remove('opening-active');
+        document.body.classList.add('opening-revealed');
+        // Hero text reveals via CSS, then we hold and auto-scroll
+        const totalWait = TEXT_REVEAL_MS + READ_HOLD_MS;
+        const after = setTimeout(() => {
+          if (userAborted) { unlock(); return; }
+          autoScrollToPhilosophy();
+        }, totalWait);
+        // Save handle for cleanup
+        cleanupTimer = after;
       }
     };
+    let cleanupTimer = 0;
     raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(scrollRaf);
+      clearTimeout(cleanupTimer);
+      window.removeEventListener('wheel', onUserInput);
+      window.removeEventListener('touchstart', onUserInput);
+      window.removeEventListener('keydown', onUserInput);
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevBodyOverflow;
+      document.body.classList.remove('opening-active');
+      document.body.classList.remove('opening-revealed');
     };
   }, []);
   return (
