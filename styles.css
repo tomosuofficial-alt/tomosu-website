@@ -267,7 +267,7 @@ section { position: relative; }
   top: 0;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 22vh 64px 80px;
+  padding: 22vh 64px 100px;
   width: 100%;
   min-height: 100vh;
   display: flex;
