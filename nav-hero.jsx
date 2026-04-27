@@ -21,9 +21,7 @@ const scrollToId = (id) => (e) => {
    1. Hero text is hidden (body.opening-active) and the huge logo holds 700ms
    2. Logo docks into the header over 1400ms
    3. body.opening-revealed → hero text fades in with stagger (~1.5s)
-   4. Hold 1500ms so the visitor can read the headline
-   5. Smooth-scroll into Philosophy (#philosophy)
-   6. Unlock — user takes over (any wheel/touch input aborts auto-scroll)
+   4. Once text is settled, scroll lock is released — user takes over
 */
 const MorphLogo = () => {
   const ref = React.useRef(null);
@@ -35,9 +33,7 @@ const MorphLogo = () => {
 
     const HOLD_MS = 700;
     const ANIM_MS = 1400;
-    const TEXT_REVEAL_MS = 1500; // wait for hero copy to finish staggering in
-    const READ_HOLD_MS = 1500;   // let the visitor sit with the headline
-    const SCROLL_MS = 1400;      // smooth scroll to philosophy
+    const TEXT_REVEAL_MS = 1500; // wait for the stagger to settle before unlocking
 
     const prevHtmlOverflow = document.documentElement.style.overflow;
     const prevBodyOverflow = document.body.style.overflow;
@@ -48,37 +44,11 @@ const MorphLogo = () => {
 
     const startAt = performance.now() + HOLD_MS;
     let raf = 0;
-    let scrollRaf = 0;
-    let userAborted = false;
-
-    const onUserInput = () => { userAborted = true; };
-    window.addEventListener('wheel', onUserInput, { passive: true });
-    window.addEventListener('touchstart', onUserInput, { passive: true });
-    window.addEventListener('keydown', onUserInput, { passive: true });
+    let unlockTimer = 0;
 
     const unlock = () => {
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevBodyOverflow;
-    };
-
-    const autoScrollToPhilosophy = () => {
-      const target = document.getElementById('philosophy');
-      if (!target) { unlock(); return; }
-      const startY = window.scrollY;
-      const endY = target.getBoundingClientRect().top + window.scrollY - 20;
-      const t0 = performance.now();
-      const step = (now) => {
-        if (userAborted) { unlock(); return; }
-        const t = Math.min(1, (now - t0) / SCROLL_MS);
-        const eased = easeInOut(t);
-        window.scrollTo(0, startY + (endY - startY) * eased);
-        if (t < 1) {
-          scrollRaf = requestAnimationFrame(step);
-        } else {
-          unlock();
-        }
-      };
-      scrollRaf = requestAnimationFrame(step);
     };
 
     const tick = (now) => {
@@ -92,26 +62,14 @@ const MorphLogo = () => {
         setP(1);
         document.body.classList.remove('opening-active');
         document.body.classList.add('opening-revealed');
-        // Hero text reveals via CSS, then we hold and auto-scroll
-        const totalWait = TEXT_REVEAL_MS + READ_HOLD_MS;
-        const after = setTimeout(() => {
-          if (userAborted) { unlock(); return; }
-          autoScrollToPhilosophy();
-        }, totalWait);
-        // Save handle for cleanup
-        cleanupTimer = after;
+        unlockTimer = setTimeout(unlock, TEXT_REVEAL_MS);
       }
     };
-    let cleanupTimer = 0;
     raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);
-      cancelAnimationFrame(scrollRaf);
-      clearTimeout(cleanupTimer);
-      window.removeEventListener('wheel', onUserInput);
-      window.removeEventListener('touchstart', onUserInput);
-      window.removeEventListener('keydown', onUserInput);
+      clearTimeout(unlockTimer);
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevBodyOverflow;
       document.body.classList.remove('opening-active');
