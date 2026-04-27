@@ -1,11 +1,25 @@
 /* Local development auto-reload.
-   Polls the styles + JSX + current page every 1.5s and triggers a hard
-   reload when any signature changes. Disabled outside localhost so the
-   script becomes a no-op on tomosu-inc.com. */
+   Polls the styles + JSX + current page every 1.5s and triggers a reload
+   when any signature changes. Disabled outside localhost so the script
+   becomes a no-op on tomosu-inc.com. Preserves scroll position across
+   reloads via sessionStorage so the visitor stays where they were. */
 (() => {
   const host = location.hostname;
   const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '';
   if (!isLocal) return;
+
+  // -- Restore scroll position saved before the previous dev-reload
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const savedY = sessionStorage.getItem('dev-reload-scrollY');
+  if (savedY !== null) {
+    sessionStorage.removeItem('dev-reload-scrollY');
+    const y = parseInt(savedY, 10);
+    if (Number.isFinite(y)) {
+      window.scrollTo(0, y);
+      requestAnimationFrame(() => window.scrollTo(0, y));
+      setTimeout(() => window.scrollTo(0, y), 50);
+    }
+  }
 
   const targets = new Set([
     '/styles.css',
@@ -52,6 +66,7 @@
       if (sig === null) continue;
       if (last[url] !== undefined && last[url] !== sig) {
         console.log('[dev-reload] changed:', url);
+        sessionStorage.setItem('dev-reload-scrollY', String(window.scrollY));
         location.reload();
         return;
       }
