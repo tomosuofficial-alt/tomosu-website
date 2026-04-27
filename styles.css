@@ -233,16 +233,18 @@ section { position: relative; }
 .nav-links a::after {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: -6px;
-  width: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 1px;
   background: currentColor;
-  transform: translateX(-50%);
-  transition: width 0.4s var(--ease);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
 }
 .nav-links a:hover, .nav-links a.active { opacity: 1; }
-.nav-links a.active::after { width: 100%; }
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); }
 .nav-cta {
   font-family: var(--sans-jp);
   font-weight: 300;
