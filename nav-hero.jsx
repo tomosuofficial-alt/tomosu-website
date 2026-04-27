@@ -18,25 +18,64 @@ const scrollToId = (id) => (e) => {
 };
 
 /* MorphLogo: a fixed logo that starts HUGE + centered in the hero
-   and docks into the header as you scroll (Kinfolk-style).
+   and docks into the header. On first paint we run an opening sequence
+   (hold → auto-dock + auto-scroll) before handing scroll back to the user.
    We drive it purely with a CSS variable --p (0..1) set from JS. */
 const MorphLogo = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    const update = () => {
-      // Progress: 0 when at top, 1 when scrolled past the morph distance.
-      // Use ~70% of the first viewport — logo fully docked before hero exits.
-      const vh = window.innerHeight || 800;
-      const distance = vh * 0.55;
-      const p = Math.max(0, Math.min(1, window.scrollY / distance));
-      // Ease for a calmer feel
-      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+    const vh = window.innerHeight || 800;
+    const distance = vh * 0.55;
+    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+    const setP = (eased) => {
       if (ref.current) ref.current.style.setProperty('--p', eased);
     };
-    update();
+
+    let openingDone = false;
+    let raf = 0;
+
+    // -- Opening sequence: hold 700ms, then animate (--p, scrollY) 0→distance over 1400ms
+    const HOLD_MS = 700;
+    const ANIM_MS = 1400;
+    const startAt = performance.now() + HOLD_MS;
+
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+
+    const tick = (now) => {
+      const elapsed = now - startAt;
+      if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
+      const t = Math.min(1, elapsed / ANIM_MS);
+      const eased = easeInOut(t);
+      setP(eased);
+      window.scrollTo(0, distance * eased);
+      if (t < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        document.documentElement.style.overflow = prevHtmlOverflow;
+        document.body.style.overflow = prevBodyOverflow;
+        openingDone = true;
+      }
+    };
+    raf = requestAnimationFrame(tick);
+
+    // -- Scroll-driven update (active only after opening sequence finishes)
+    const update = () => {
+      if (!openingDone) return;
+      const p = Math.max(0, Math.min(1, window.scrollY / distance));
+      setP(easeInOut(p));
+    };
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
+
     return () => {
+      cancelAnimationFrame(raf);
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
