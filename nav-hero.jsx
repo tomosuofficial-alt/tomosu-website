@@ -17,25 +17,19 @@ const scrollToId = (id) => (e) => {
   }
 };
 
-/* MorphLogo: a fixed logo that starts HUGE + centered in the hero
-   and docks into the header. On first paint we run an opening sequence
-   (hold → auto-dock + auto-scroll) before handing scroll back to the user.
-   We drive it purely with a CSS variable --p (0..1) set from JS. */
+/* MorphLogo: starts HUGE + centered in the hero, then docks into the
+   header on first paint. During the dock animation, the page is locked
+   (no scroll). After it finishes, the logo stays docked and the user
+   can freely scroll the page. We drive it with a CSS variable --p (0..1). */
 const MorphLogo = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    const vh = window.innerHeight || 800;
-    const distance = vh * 0.55;
     const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-
     const setP = (eased) => {
       if (ref.current) ref.current.style.setProperty('--p', eased);
     };
 
-    let openingDone = false;
-    let raf = 0;
-
-    // -- Opening sequence: hold 700ms, then animate (--p, scrollY) 0→distance over 1400ms
+    // Opening sequence: hold 700ms, then dock over 1400ms.
     const HOLD_MS = 700;
     const ANIM_MS = 1400;
     const startAt = performance.now() + HOLD_MS;
@@ -46,38 +40,26 @@ const MorphLogo = () => {
     document.body.style.overflow = 'hidden';
     window.scrollTo(0, 0);
 
+    let raf = 0;
     const tick = (now) => {
       const elapsed = now - startAt;
       if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
       const t = Math.min(1, elapsed / ANIM_MS);
-      const eased = easeInOut(t);
-      setP(eased);
-      window.scrollTo(0, distance * eased);
+      setP(easeInOut(t));
       if (t < 1) {
         raf = requestAnimationFrame(tick);
       } else {
+        setP(1);
         document.documentElement.style.overflow = prevHtmlOverflow;
         document.body.style.overflow = prevBodyOverflow;
-        openingDone = true;
       }
     };
     raf = requestAnimationFrame(tick);
-
-    // -- Scroll-driven update (active only after opening sequence finishes)
-    const update = () => {
-      if (!openingDone) return;
-      const p = Math.max(0, Math.min(1, window.scrollY / distance));
-      setP(easeInOut(p));
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
 
     return () => {
       cancelAnimationFrame(raf);
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevBodyOverflow;
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
     };
   }, []);
   return (
