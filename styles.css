@@ -857,6 +857,41 @@ section { position: relative; }
   text-align: center;
   line-height: 1.4;
 }
+.client-chip-links {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+.client-chip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
+  text-decoration: none;
+  line-height: 1;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.client-chip-link:hover,
+.client-chip-link:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.client-chip-link-icon {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  color: currentColor;
+}
 
 /* Own track record */
 .tinz {
@@ -2066,6 +2101,9 @@ section { position: relative; }
   .client-chip-shot { width: 118px; }
   .client-chip-store { font-size: 13px; margin-top: 16px; }
   .client-chip-company { font-size: 11px; }
+  .client-chip-links { margin-top: 10px; gap: 10px; }
+  .client-chip-link { font-size: 10px; padding: 4px 8px; gap: 4px; }
+  .client-chip-link-icon { width: 11px; height: 11px; }
 
   /* Voice cards */
   .voice-card { grid-template-columns: 72px 1fr; gap: 20px; padding: 36px 0; }
