@@ -312,7 +312,7 @@ const Voice = () => (
             <blockquote className="voice-card-quote">{v.quote}</blockquote>
             <div className="voice-card-meta">
               <span className="voice-card-name">{v.name}</span>
-              <span className="voice-card-role">{v.company}　{v.role}</span>
+              <span className="voice-card-role">{v.company} 様　{v.role}</span>
             </div>
           </div>
         </div>
