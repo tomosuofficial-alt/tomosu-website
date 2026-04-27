@@ -1841,6 +1841,16 @@ section { position: relative; }
 .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 1.2s var(--ease), transform 1.2s var(--ease); }
 .fade-up.in { opacity: 1; transform: none; }
 
+/* Voice — alternating slide from left/right on scroll */
+.voice-card.fade-up:nth-child(odd) { transform: translateX(-80px); }
+.voice-card.fade-up:nth-child(even) { transform: translateX(80px); }
+.voice-card.fade-up.in { transform: translateX(0); }
+@media (max-width: 720px) {
+  .voice-card.fade-up:nth-child(odd) { transform: translateX(-40px); }
+  .voice-card.fade-up:nth-child(even) { transform: translateX(40px); }
+  .voice-card.fade-up.in { transform: translateX(0); }
+}
+
 /* ============ Photo placeholders (editorial empty-state) ============ */
 .photo-slot {
   position: relative;
