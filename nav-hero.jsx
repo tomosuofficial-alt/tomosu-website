@@ -17,76 +17,25 @@ const scrollToId = (id) => (e) => {
   }
 };
 
-/* MorphLogo + opening sequence:
-   - First visit in this session: hold huge logo, dock into header,
-     stagger-fade hero text, then unlock scroll
-   - Reloads within the same tab (sessionStorage flag set): skip the
-     animation entirely so the visitor stays exactly where they were
-*/
-const OPENING_PLAYED_KEY = 'tomosu-opening-played';
-
+/* MorphLogo: a fixed logo that starts HUGE + centered in the hero
+   and docks into the header as you scroll (Kinfolk-style).
+   We drive it purely with a CSS variable --p (0..1) set from JS. */
 const MorphLogo = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    const setP = (eased) => {
+    const update = () => {
+      const vh = window.innerHeight || 800;
+      const distance = vh * 0.55;
+      const p = Math.max(0, Math.min(1, window.scrollY / distance));
+      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
       if (ref.current) ref.current.style.setProperty('--p', eased);
     };
-
-    // Skip the opening on reloads within the same session
-    if (sessionStorage.getItem(OPENING_PLAYED_KEY)) {
-      setP(1);
-      document.body.classList.add('opening-revealed');
-      return;
-    }
-
-    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-
-    const HOLD_MS = 700;
-    const ANIM_MS = 1400;
-    const TEXT_REVEAL_MS = 1500; // wait for the stagger to settle before unlocking
-
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    const prevBodyOverflow = document.body.style.overflow;
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    document.body.classList.add('opening-active');
-    window.scrollTo(0, 0);
-
-    const startAt = performance.now() + HOLD_MS;
-    let raf = 0;
-    let unlockTimer = 0;
-
-    const unlock = () => {
-      document.documentElement.style.overflow = prevHtmlOverflow;
-      document.body.style.overflow = prevBodyOverflow;
-    };
-
-    const tick = (now) => {
-      const elapsed = now - startAt;
-      if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
-      const t = Math.min(1, elapsed / ANIM_MS);
-      setP(easeInOut(t));
-      if (t < 1) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        setP(1);
-        document.body.classList.remove('opening-active');
-        document.body.classList.add('opening-revealed');
-        unlockTimer = setTimeout(() => {
-          unlock();
-          sessionStorage.setItem(OPENING_PLAYED_KEY, '1');
-        }, TEXT_REVEAL_MS);
-      }
-    };
-    raf = requestAnimationFrame(tick);
-
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
     return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(unlockTimer);
-      document.documentElement.style.overflow = prevHtmlOverflow;
-      document.body.style.overflow = prevBodyOverflow;
-      document.body.classList.remove('opening-active');
-      document.body.classList.remove('opening-revealed');
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
     };
   }, []);
   return (
