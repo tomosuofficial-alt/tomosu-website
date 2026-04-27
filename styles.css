@@ -235,17 +235,28 @@ section { position: relative; }
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2em;
-  padding: 4px 0;
-  border-bottom: 1px solid currentColor;
+  padding: 8px 18px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background-color: transparent;
   cursor: pointer;
   opacity: 0.9;
-  transition: opacity 0.3s, color 0.3s;
+  transition: opacity 0.3s, color 0.3s, background-color 0.3s, border-color 0.3s;
   line-height: 1;
   white-space: nowrap;
   align-self: center;
 }
-.nav-cta:hover { color: var(--gold); opacity: 1; }
-.nav.on-dark:not(.scrolled) .nav-cta:hover { color: var(--gold-soft); }
+.nav-cta:hover {
+  opacity: 1;
+  color: var(--paper);
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+.nav.on-dark:not(.scrolled) .nav-cta:hover {
+  color: var(--ink);
+  background-color: var(--paper);
+  border-color: var(--paper);
+}
 
 /* On dark bg (Philosophy): subtle brightness bump so charcoal half stays legible-ish,
    but since logo is intended for light bg, also slightly invert tonal balance via filter */
