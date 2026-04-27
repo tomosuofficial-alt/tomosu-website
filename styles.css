@@ -867,8 +867,11 @@ section { position: relative; }
 .client-chip-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   padding: 5px 10px;
+  min-width: 108px;
+  box-sizing: border-box;
   border: 1px solid var(--line);
   border-radius: 999px;
   font-family: var(--serif-jp);
@@ -2102,7 +2105,7 @@ section { position: relative; }
   .client-chip-store { font-size: 13px; margin-top: 16px; }
   .client-chip-company { font-size: 11px; }
   .client-chip-links { margin-top: 10px; gap: 10px; }
-  .client-chip-link { font-size: 10px; padding: 4px 8px; gap: 4px; }
+  .client-chip-link { font-size: 10px; padding: 4px 8px; gap: 4px; min-width: 92px; }
   .client-chip-link-icon { width: 11px; height: 11px; }
 
   /* Voice cards */
