@@ -18,18 +18,28 @@ const scrollToId = (id) => (e) => {
 };
 
 /* MorphLogo + opening sequence:
-   1. Hero text is hidden (body.opening-active) and the huge logo holds 700ms
-   2. Logo docks into the header over 1400ms
-   3. body.opening-revealed → hero text fades in with stagger (~1.5s)
-   4. Once text is settled, scroll lock is released — user takes over
+   - First visit in this session: hold huge logo, dock into header,
+     stagger-fade hero text, then unlock scroll
+   - Reloads within the same tab (sessionStorage flag set): skip the
+     animation entirely so the visitor stays exactly where they were
 */
+const OPENING_PLAYED_KEY = 'tomosu-opening-played';
+
 const MorphLogo = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
     const setP = (eased) => {
       if (ref.current) ref.current.style.setProperty('--p', eased);
     };
+
+    // Skip the opening on reloads within the same session
+    if (sessionStorage.getItem(OPENING_PLAYED_KEY)) {
+      setP(1);
+      document.body.classList.add('opening-revealed');
+      return;
+    }
+
+    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
     const HOLD_MS = 700;
     const ANIM_MS = 1400;
@@ -62,7 +72,10 @@ const MorphLogo = () => {
         setP(1);
         document.body.classList.remove('opening-active');
         document.body.classList.add('opening-revealed');
-        unlockTimer = setTimeout(unlock, TEXT_REVEAL_MS);
+        unlockTimer = setTimeout(() => {
+          unlock();
+          sessionStorage.setItem(OPENING_PLAYED_KEY, '1');
+        }, TEXT_REVEAL_MS);
       }
     };
     raf = requestAnimationFrame(tick);
