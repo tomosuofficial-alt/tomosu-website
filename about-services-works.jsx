@@ -156,7 +156,7 @@ const CLIENTS = [
   { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.png?v=2', homepage: 'https://takasakiknocks.jp/', instagram: 'https://www.instagram.com/bistro_knocks/' },
   { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg', homepage: 'https://local-power.co.jp/', instagram: 'https://www.instagram.com/akioshimizu1218/' },
   { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg?v=2', homepage: 'https://mzcafe.owst.jp/', instagram: 'https://www.instagram.com/mzcafe_8080/' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2', homepage: 'https://senpuku.co/', instagram: 'https://www.instagram.com/senpuku_takasaki/' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2', homepage: 'https://senpuku.co/', instagram: 'https://www.instagram.com/yoidokoro_senpuku/' },
 ];
 const SAMPLES = [
   { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.png?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
