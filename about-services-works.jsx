@@ -40,10 +40,10 @@ const About = () => (
 
     <div className="about-scenes">
       <div className="about-scene photo-slot">
-        <img src="assets/about/about-onsite-01-kitchen.png?v=3" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
+        <img src="assets/about/about-onsite-01-kitchen.webp" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
       </div>
       <div className="about-scene photo-slot">
-        <img src="assets/about/about-onsite-02-dialogue.jpg?v=2" alt="経営者との対話風景" className="photo-slot-img"/>
+        <img src="assets/about/about-onsite-02-dialogue.webp" alt="経営者との対話風景" className="photo-slot-img"/>
       </div>
     </div>
 
