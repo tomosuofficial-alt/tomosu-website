@@ -10,7 +10,7 @@ const About = () => (
   <section id="about" className="about">
     <div className="about-grid">
       <div className="about-portrait">
-        <img src="assets/profile.png?v=3" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img"/>
+        <img src="assets/profile.webp?v=3" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img"/>
         <div className="label">Takashi Ouchi</div>
       </div>
       <div className="about-content">
@@ -77,7 +77,7 @@ const SERVICES = [
     note: '最低契約期間 6ヶ月',
     desc: '月次・週次で経営の隣に立ち、意思決定と実行をともに。孤独な判断を、灯りのあるものに変える基幹サービスです。',
     items: ['経営戦略', 'ブランド構築', 'SNS戦略', '人事・組織', 'IT・DX'],
-    photoImg: 'assets/services/service-01-advisory-desk.jpg',
+    photoImg: 'assets/services/service-01-advisory-desk.webp',
   },
   {
     num: 'ii.',
@@ -87,7 +87,7 @@ const SERVICES = [
     note: 'スコープに応じてご提案',
     desc: '単発の制作・構築プロジェクト。「作る」だけで終わらせず、「回る」ところまで一貫して設計します。',
     items: ['HP制作', 'ブランドデザイン一式', '地域コンテンツ制作', '業務マニュアル整備'],
-    photoImg: 'assets/services/service-02-project-collateral.jpg',
+    photoImg: 'assets/services/service-02-project-collateral.webp',
   },
   {
     num: 'iii.',
@@ -97,7 +97,7 @@ const SERVICES = [
     note: '単発・オンライン可',
     desc: '「まず話を聞いてほしい」方に。現状整理と、次の一歩のための視点提供を行います。',
     items: ['現状整理', '意思決定サポート', '壁打ち', '専門家紹介'],
-    photoImg: 'assets/services/service-03-spot-cafe.jpg',
+    photoImg: 'assets/services/service-03-spot-cafe.webp',
   },
 ];
 
@@ -152,22 +152,22 @@ const Services = () => (
 );
 
 const CLIENTS = [
-  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg?v=2', homepage: 'https://niki-diner.owst.jp/', instagram: 'https://www.instagram.com/nikidiner/' },
-  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.png?v=2', homepage: 'https://takasakiknocks.jp/', instagram: 'https://www.instagram.com/bistro_knocks/' },
-  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg', homepage: 'https://local-power.co.jp/', instagram: 'https://www.instagram.com/akioshimizu1218/' },
-  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg?v=2', homepage: 'https://mzcafe.owst.jp/', instagram: 'https://www.instagram.com/mzcafe_8080/' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2', homepage: 'https://senpuku.co/', instagram: 'https://www.instagram.com/yoidokoro_senpuku/' },
+  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.webp?v=2', homepage: 'https://niki-diner.owst.jp/', instagram: 'https://www.instagram.com/nikidiner/' },
+  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.webp?v=2', homepage: 'https://takasakiknocks.jp/', instagram: 'https://www.instagram.com/bistro_knocks/' },
+  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.webp', homepage: 'https://local-power.co.jp/', instagram: 'https://www.instagram.com/akioshimizu1218/' },
+  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.webp?v=2', homepage: 'https://mzcafe.owst.jp/', instagram: 'https://www.instagram.com/mzcafe_8080/' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.webp?v=2', homepage: 'https://senpuku.co/', instagram: 'https://www.instagram.com/yoidokoro_senpuku/' },
 ];
 const SAMPLES = [
-  { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.png?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
-  { title: 'コーポレートサイト制作', en: 'Corporate Web', img: 'assets/works/corporate-web.png?v=2', desc: '伝えるべき価値を、読みやすく、静かに届ける設計。立ち上げ後の運用まで伴走します。' },
-  { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.png?v=2', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
+  { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.webp?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
+  { title: 'コーポレートサイト制作', en: 'Corporate Web', img: 'assets/works/corporate-web.webp?v=2', desc: '伝えるべき価値を、読みやすく、静かに届ける設計。立ち上げ後の運用まで伴走します。' },
+  { title: '地域コンテンツ制作', en: 'Regional Content', img: 'assets/works/regional-content.webp?v=2', desc: '地域の事業者と共につくる、写真・映像・文章。観光と生業の両輪を照らす企画を。' },
 ];
 const COMMISSIONS = [
-  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoImg: 'assets/commission/commission-01-bento.jpg' },
-  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。', photoImg: 'assets/commission/commission-02-event.jpg' },
-  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。', photoImg: 'assets/commission/commission-03-kirizumi-brewery.jpg' },
-  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。', photoImg: 'assets/commission/commission-04-new-shop.jpg' },
+  { title: '弁当製造・調達運営', body: '地域イベント向け大量製造オペレーションを設計・統括。', photoImg: 'assets/commission/commission-01-bento.webp' },
+  { title: 'イベント運営支援', body: '企画から当日運営までを一貫で伴走。地域事業者との連携設計を含む。', photoImg: 'assets/commission/commission-02-event.webp' },
+  { title: '霧積ブルワリー レストラン部門立ち上げ伴走', body: 'レシピマニュアルの制作、およびオペレーションの提案を単発案件として実施。', photoImg: 'assets/commission/commission-03-kirizumi-brewery.webp' },
+  { title: '地域飲食店 新規立ち上げ', body: 'コンセプト設計・物件・メニュー・採用・オペレーションまでを現場統括。', photoImg: 'assets/commission/commission-04-new-shop.webp' },
 ];
 
 const Works = () => {
@@ -279,7 +279,7 @@ const VOICES = [
     company: '株式会社千福',
     role: '代表取締役',
     cat: 'Izakaya',
-    img: 'assets/voice/senpuku.jpg',
+    img: 'assets/voice/senpuku.webp',
   },
   {
     quote: 'メニューや販促物のデザインはほぼお任せしていて、週一で店長代理として現場にも入ってもらっています。デザインだけ・相談だけじゃなく、実際にホールに立つ人が店舗運営の顧問をしてくれる。この距離感は他にないと思います。',
@@ -287,7 +287,7 @@ const VOICES = [
     company: '株式会社二期',
     role: '飲食事業部統括',
     cat: 'Diner',
-    img: 'assets/voice/niki-diner.jpg',
+    img: 'assets/voice/niki-diner.webp',
   },
   {
     quote: '弁当製造の調理を任せられるだけでも助かっているのに、大型イベントの出店までサポートしてもらっています。先日の肉フェスでは二日間で約300万円の売上を達成。調理スタッフの配置からオペレーション、レイアウトまで一緒に設計してもらえたからこその結果です。',
@@ -295,7 +295,7 @@ const VOICES = [
     company: '株式会社DELIENTZ',
     role: '代表取締役',
     cat: 'Bistro',
-    img: 'assets/voice/bistro-knocks.png?v=2',
+    img: 'assets/voice/bistro-knocks.webp?v=2',
   },
   {
     quote: 'SNS運用を丸ごとお願いしていて、月2回は店舗に来てスタッフと直接やり取りしてくれる。現場の空気を知っている人が発信するから、投稿に嘘がない。お客様からも「Instagramを見て来ました」という声が増えました。',
@@ -303,7 +303,7 @@ const VOICES = [
     company: '株式会社サンフラワー',
     role: '飲食事業部統括',
     cat: 'Cafe',
-    img: 'assets/voice/mz-cafe.jpg',
+    img: 'assets/voice/mz-cafe.webp',
   },
   {
     quote: 'Webサイト制作のサポートに加えて、地域活性化につながる地図の制作やデータ入力まで柔軟に対応してくれる。こちらの「やりたい」をそのまま受け止めて、実務レベルで手を動かしてくれるのが本当にありがたいです。',
@@ -311,7 +311,7 @@ const VOICES = [
     company: 'LOCAL POWER株式会社',
     role: '代表取締役',
     cat: 'Regional Brand',
-    img: 'assets/voice/localpower.png?v=2',
+    img: 'assets/voice/localpower.webp?v=2',
   },
 ];
 
