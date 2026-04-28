@@ -152,11 +152,11 @@ const Services = () => (
 );
 
 const CLIENTS = [
-  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg?v=2' },
-  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.png?v=2' },
-  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg' },
-  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg?v=2' },
-  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2' },
+  { name: 'Niki ★ DINER', en: "Niki Diner", cat: 'Diner', logo: 'assets/clients/niki-diner.png', company: '株式会社二期', shotImg: 'assets/clients/shots/niki-diner.jpg?v=2', homepage: 'https://niki-diner.owst.jp/', instagram: 'https://www.instagram.com/nikidiner/' },
+  { name: 'Bistro knocks', en: 'Bistro knocks', cat: 'Bistro', logo: 'assets/clients/bistro-knocks.png', company: '株式会社DELIENTZ', shotImg: 'assets/clients/shots/bistro-knocks.png?v=2', homepage: 'https://takasakiknocks.jp/', instagram: 'https://www.instagram.com/bistro_knocks/' },
+  { name: 'LOCAL POWER', en: 'Local Power', cat: 'Regional Brand', isEn: true, logo: 'assets/clients/localpower.png', company: 'LOCAL POWER株式会社', shotImg: 'assets/clients/shots/localpower.jpg', homepage: 'https://local-power.co.jp/', instagram: 'https://www.instagram.com/akioshimizu1218/' },
+  { name: "M'z cafe", en: "M'z Cafe", cat: 'Cafe', isEn: true, logo: 'assets/clients/mz-cafe.png', company: '株式会社サンフラワー', shotImg: 'assets/clients/shots/mz-cafe.jpg?v=2', homepage: 'https://mzcafe.owst.jp/', instagram: 'https://www.instagram.com/mzcafe_8080/' },
+  { name: 'よいどころ千福', en: 'Yoidokoro Senpuku', cat: 'Izakaya', logo: 'assets/clients/senpuku.png', company: '株式会社千福', shotImg: 'assets/clients/shots/senpuku.jpg?v=2', homepage: 'https://senpuku.co/', instagram: 'https://www.instagram.com/yoidokoro_senpuku/' },
 ];
 const SAMPLES = [
   { title: 'ブランドデザイン一式', en: 'Brand Identity Suite', img: 'assets/works/brand-identity.png?v=2', desc: '名刺・ショップカード・メニュー・POP・ステッカー・Tシャツまで、ブランドの表現を一貫した手触りで構築します。' },
@@ -204,6 +204,30 @@ const Works = () => {
                     </div>
                     <div className="client-chip-store">{c.name}</div>
                     <div className="client-chip-company">{c.company} 様</div>
+                    {(c.homepage || c.instagram) && (
+                      <div className="client-chip-links">
+                        {c.homepage && (
+                          <a href={c.homepage} target="_blank" rel="noopener noreferrer" className="client-chip-link" aria-label={`${c.name} のウェブサイトを新しいタブで開く`}>
+                            <svg className="client-chip-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <circle cx="12" cy="12" r="10"/>
+                              <line x1="2" y1="12" x2="22" y2="12"/>
+                              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                            <span>Website</span>
+                          </a>
+                        )}
+                        {c.instagram && (
+                          <a href={c.instagram} target="_blank" rel="noopener noreferrer" className="client-chip-link" aria-label={`${c.name} のInstagramを新しいタブで開く`}>
+                            <svg className="client-chip-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                            <span>Instagram</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

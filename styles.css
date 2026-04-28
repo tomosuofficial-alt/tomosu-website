@@ -232,24 +232,50 @@ section { position: relative; }
   cursor: pointer;
   line-height: 1;
   white-space: nowrap;
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
 }
 .nav-links a:hover, .nav-links a.active { opacity: 1; }
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); }
 .nav-cta {
   font-family: var(--sans-jp);
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2em;
-  padding: 4px 0;
-  border-bottom: 1px solid currentColor;
+  padding: 8px 18px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background-color: transparent;
   cursor: pointer;
   opacity: 0.9;
-  transition: opacity 0.3s, color 0.3s;
+  transition: opacity 0.3s, color 0.3s, background-color 0.3s, border-color 0.3s;
   line-height: 1;
   white-space: nowrap;
   align-self: center;
 }
-.nav-cta:hover { color: var(--gold); opacity: 1; }
-.nav.on-dark:not(.scrolled) .nav-cta:hover { color: var(--gold-soft); }
+.nav-cta:hover {
+  opacity: 1;
+  color: var(--paper);
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+.nav.on-dark:not(.scrolled) .nav-cta:hover {
+  color: var(--ink);
+  background-color: var(--paper);
+  border-color: var(--paper);
+}
 
 /* On dark bg (Philosophy): subtle brightness bump so charcoal half stays legible-ish,
    but since logo is intended for light bg, also slightly invert tonal balance via filter */
@@ -860,6 +886,44 @@ section { position: relative; }
   white-space: nowrap;
   text-align: center;
   line-height: 1.4;
+}
+.client-chip-links {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+.client-chip-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 10px;
+  min-width: 108px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
+  text-decoration: none;
+  line-height: 1;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.client-chip-link:hover,
+.client-chip-link:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.client-chip-link-icon {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  color: currentColor;
 }
 
 /* Own track record */
@@ -2080,6 +2144,9 @@ section { position: relative; }
   .client-chip-shot { width: 118px; }
   .client-chip-store { font-size: 13px; margin-top: 16px; }
   .client-chip-company { font-size: 11px; }
+  .client-chip-links { margin-top: 10px; gap: 10px; }
+  .client-chip-link { font-size: 10px; padding: 4px 8px; gap: 4px; min-width: 92px; }
+  .client-chip-link-icon { width: 11px; height: 11px; }
 
   /* Voice cards */
   .voice-card { grid-template-columns: 72px 1fr; gap: 20px; padding: 36px 0; }
