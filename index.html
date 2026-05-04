@@ -6,7 +6,7 @@
 <title>TOMOSU. — 経営者を、ひとりにしない。</title>
 
 <!-- SEO -->
-<meta name="description" content="TOMOSU.（灯す）— 群馬県高崎市を拠点に、中小企業・飲食店の経営に伴走するビジネスコンサルタント。経営者を、ひとりにしない。"/>
+<meta name="description" content="群馬を拠点に、中小企業・飲食店の経営判断に月次・週次で伴走するビジネスコンサルタント。机上の戦略屋でも、請負の制作屋でもなく。経営者を、ひとりにしない。"/>
 <meta name="author" content="大内 嵩志 / Takashi Ouchi"/>
 <meta name="theme-color" content="#FAFAF7"/>
 
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="TOMOSU."/>
 <meta property="og:title" content="TOMOSU. — 経営者を、ひとりにしない。"/>
-<meta property="og:description" content="群馬県高崎市を拠点に、中小企業・飲食店の経営に伴走するビジネスコンサルタント。経営者を、ひとりにしない。"/>
+<meta property="og:description" content="群馬を拠点に、中小企業・飲食店の経営判断に月次・週次で伴走するビジネスコンサルタント。経営者を、ひとりにしない。"/>
 <meta property="og:url" content="https://tomosu-inc.com/"/>
 <meta property="og:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
 <meta property="og:locale" content="ja_JP"/>
@@ -22,7 +22,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="TOMOSU. — 経営者を、ひとりにしない。"/>
-<meta name="twitter:description" content="群馬県高崎市を拠点に、中小企業・飲食店の経営に伴走するビジネスコンサルタント。"/>
+<meta name="twitter:description" content="群馬発、中小企業・飲食店の経営判断に月次・週次で伴走するコンサルティング。経営者を、ひとりにしない。"/>
 <meta name="twitter:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
 
 <!-- Favicon (TODO: 本番では assets/favicon.ico に差し替え) -->
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css?v=35"/>
+<link rel="stylesheet" href="styles.css?v=39"/>
 </head>
 <body>
   <div id="root"></div>
@@ -44,9 +44,9 @@
   <!-- Babel standalone — JSX をブラウザでトランスパイル（本番でも必要） -->
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-  <script type="text/babel" src="nav-hero.jsx?v=35"></script>
-  <script type="text/babel" src="about-services-works.jsx?v=35"></script>
-  <script type="text/babel" src="flow-blog-contact.jsx?v=35"></script>
+  <script type="text/babel" src="nav-hero.jsx?v=39"></script>
+  <script type="text/babel" src="about-services-works.jsx?v=39"></script>
+  <script type="text/babel" src="flow-blog-contact.jsx?v=39"></script>
 
   <script type="text/babel">
     const App = () => {
@@ -56,7 +56,7 @@
             if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
           });
         }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.hero-title, .hero-sub, .sec-title, .svc-row, .client-cell, .sample, .comm-row, .flow-row, .blog-row, .tinz, .career-row, .phil-vision, .phil-body p, .diff-text, .voice-card, .about-portrait, .about-content, .form-field').forEach(el => {
+        document.querySelectorAll('.hero-title, .hero-sub, .sec-title, .svc-row, .client-cell, .sample, .comm-row, .flow-row, .blog-row, .tinz, .career-row, .phil-vision, .phil-body p, .diff-text, .voice-card, .about-portrait, .about-content, .form-field, .aud-kicker, .aud-item, .aud-close, .contact-assure').forEach(el => {
           el.classList.add('fade-up');
           io.observe(el);
         });
@@ -84,9 +84,11 @@
         <MorphLogo/>
         <main>
           <Hero/>
+          <Audience/>
           <Philosophy/>
           <About/>
           <Services/>
+          <Training/>
           <Works/>
           <Voice/>
           <Flow/>
@@ -98,6 +100,6 @@
     };
     ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
   </script>
-  <script src="/dev-reload.js?v=35"></script>
+  <script src="/dev-reload.js?v=39"></script>
 </body>
 </html>

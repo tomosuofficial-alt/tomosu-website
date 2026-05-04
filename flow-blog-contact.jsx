@@ -10,7 +10,7 @@ const Flow = () => (
   <section id="flow" className="flow">
     <div className="flow-inner">
       <div style={{ marginBottom: 120, maxWidth: 680 }}>
-        <span className="section-number">VI. — Flow</span>
+        <span className="section-number">VII. — Flow</span>
         <h2 className="sec-title" style={{ marginTop: 32 }}>まずは、<br/>話を聞かせてください。</h2>
         <p style={{ fontFamily: 'var(--serif-jp)', fontWeight: 300, fontSize: 16, lineHeight: 2.3, letterSpacing: '0.08em', color: 'var(--ink-soft)', marginTop: 48, maxWidth: 540 }}>
           初回ヒアリングは無料60分。合わないと判断すれば、<br/>正直にそう申し上げます。
@@ -58,7 +58,7 @@ const Blog = () => {
       <div className="blog-inner">
         <div className="blog-head-row">
           <div>
-            <span className="section-number">VII. — Journal</span>
+            <span className="section-number">VIII. — Journal</span>
             <h2 className="sec-title" style={{ marginTop: 32 }}>経営の現場から、<br/>灯りになる言葉を。</h2>
           </div>
           <a className="text-link" href="/journal">すべての記事を見る</a>
@@ -156,12 +156,17 @@ const Contact = () => {
     <section id="contact" className="contact">
       <div className="contact-inner">
         <div className="contact-head">
-          <span className="section-number">VIII. — Contact</span>
+          <span className="section-number">IX. — Contact</span>
           <h2 className="contact-title" style={{ marginTop: 32 }}>最初の一歩は、<br/>六十分の対話から。</h2>
           <p className="contact-lede">
-            初回ヒアリングは無料です。「まだ課題がはっきりしていない」段階でも構いません。
-            現状を整理し、TOMOSU. がお役に立てるか・立てないかを、フラットに考えるところから始めましょう。
+            初回60分のヒアリングは、無料です。<br/>
+            「何から相談すればいいかわからない」段階で、構いません。
           </p>
+          <ul className="contact-assure">
+            <li>押し売りは、一切ありません。</li>
+            <li>力になれないと判断したら、正直にそう申し上げます。</li>
+            <li>現状を整理すること自体が、最初の一歩になります。</li>
+          </ul>
           <div className="contact-photo photo-slot">
             <img src="assets/contact/contact-dialogue.webp?v=2" alt="初回ヒアリングの対話風景" className="photo-slot-img"/>
           </div>
@@ -261,7 +266,7 @@ const Contact = () => {
                 {errors.submit && <div className="form-err" style={{ marginTop: 16, marginBottom: 8, textAlign: 'center' }}>{errors.submit}</div>}
                 <div className="form-submit-wrap">
                   <button type="submit" className="form-submit" disabled={submitting}>
-                    {submitting ? '送信中 ...' : '初回無料ヒアリングを申し込む'}
+                    {submitting ? '送信中 ...' : '60分の対話を、申し込む'}
                   </button>
                 </div>
               </form>

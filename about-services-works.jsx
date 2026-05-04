@@ -132,7 +132,7 @@ const Services = () => (
                 </li>
               ))}
             </ul>
-            <a className="cta" onClick={scrollToId('contact')}>このサービスについて相談する</a>
+            <a className="cta" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
           </div>
         </div>
       ))}
@@ -149,6 +149,91 @@ const Services = () => (
       </div>
     </section>
   </>
+);
+
+const TRAININGS = [
+  {
+    num: 'i.',
+    title: 'Web/SNS 内製化研修',
+    en: 'Web & Social In-house Enablement',
+    price: '¥200,000', priceSuffix: '/日 〜',
+    note: '対面・オンライン可',
+    desc: '外注し続ける状態から、社内で回せる状態へ。バナー・販促物・SNS運用を、いまいる人材で内製化するための実践研修です。',
+    items: [
+      '販促物の社内制作',
+      'SNS運用の設計',
+      '発注の主導権回復',
+      '工程・相場感の理解',
+    ],
+    photoImg: 'assets/services/service-04-training-web.webp',
+  },
+  {
+    num: 'ii.',
+    title: '店長・幹部育成研修',
+    en: 'Manager & Executive Development',
+    price: '¥200,000', priceSuffix: '/日 〜',
+    note: '対面・オンライン可',
+    desc: '新人スタッフから次期経営層まで、各階層に応じた現場発の人材育成。十年・3ブランドの飲食経営から得た「数字で語れる店長／判断できる幹部」の育て方を体系化しています。',
+    items: [
+      '階層別スキル設計',
+      '店長の経営判断力',
+      '次世代幹部の育成',
+      '新人定着と早期戦力化',
+    ],
+    photoImg: 'assets/services/service-05-training-leadership.webp',
+  },
+  {
+    num: 'iii.',
+    title: '組織・職場づくり研修',
+    en: 'Organizational Engagement',
+    price: '¥200,000', priceSuffix: '/日 〜',
+    note: '対面・オンライン可',
+    desc: '離職を防ぎ、スタッフが自走する組織へ。心理的安全性・コミュニケーション設計・ハラスメント対策を、現場で機能するレベルまで落とし込みます。',
+    items: [
+      'コミュニケーション活性',
+      'エンゲージメント向上',
+      '離職防止と定着',
+      '心理的安全性の設計',
+    ],
+    photoImg: 'assets/services/service-06-training-organization.webp',
+  },
+];
+
+const Training = () => (
+  <section id="training" className="services">
+    <div className="sec-header" style={{ maxWidth: 1320, margin: '0 auto 40px', padding: '0 64px' }}>
+      <span className="section-number num">IV. — Training</span>
+      <h2 className="sec-title" style={{ marginTop: 32 }}>現場で動ける人を、<br/>社内に育てる。</h2>
+    </div>
+    {TRAININGS.map((s, i) => (
+      <div className="svc-row" key={i}>
+        <div className="svc-left">
+          <div className="svc-photo photo-slot">
+            <img src={s.photoImg} alt={s.title} className="photo-slot-img"/>
+          </div>
+          <span className="svc-num">{s.num}</span>
+          <h3 className="svc-title">{s.title}</h3>
+          <span className="svc-title-en">{s.en}</span>
+          <div className="svc-price">
+            {s.price}<span className="small">{s.priceSuffix}</span>
+          </div>
+          <div className="svc-note">{s.note}</div>
+        </div>
+        <div className="svc-right">
+          <p className="svc-desc">{s.desc}</p>
+          <ul className="svc-items">
+            {s.items.map((it, j) => (
+              <li key={j}>
+                <span>{it}</span>
+                <span className="idx">{String(j + 1).padStart(2, '0')}</span>
+              </li>
+            ))}
+          </ul>
+          <a className="cta" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
+        </div>
+      </div>
+    ))}
+  </section>
 );
 
 const CLIENTS = [
@@ -175,7 +260,7 @@ const Works = () => {
   return (
     <section id="works" className="works">
       <div className="works-head">
-        <span className="section-number">IV. — Works</span>
+        <span className="section-number">V. — Works</span>
         <h2 className="sec-title" style={{ marginTop: 32 }}>灯してきた、<br/>地域の事業たち。</h2>
       </div>
       <div className="works-tabs-wrap">
@@ -318,7 +403,7 @@ const VOICES = [
 const Voice = () => (
   <section id="voice" className="voice">
     <div className="voice-header">
-      <span className="section-number">V. — Voice</span>
+      <span className="section-number">VI. — Voice</span>
       <div className="voice-rule"></div>
       <h2 className="voice-heading">伴走してきた、<br/>経営者の声。</h2>
     </div>
@@ -348,4 +433,4 @@ const Voice = () => (
   </section>
 );
 
-Object.assign(window, { About, Services, Works, Voice });
+Object.assign(window, { About, Services, Training, Works, Voice });

@@ -2633,3 +2633,144 @@ section { position: relative; }
   .journal-detail-meta { flex-direction: row; gap: 16px; }
   .journal-detail-body { font-size: 14px; line-height: 2.1; }
 }
+
+/* ============ Hero secondary CTA (Spot consultation link) ============ */
+.cta-secondary {
+  display: inline-block;
+  margin-top: 24px;
+  margin-left: 28px;
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  padding-bottom: 4px;
+  border-bottom: 1px dotted var(--ink-faint);
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+  cursor: pointer;
+}
+.cta-secondary:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ============ Audience — between Hero and Philosophy ============
+   Quiet "is this you?" filter that lets the visitor recognize themselves
+   before reading the brand philosophy. Kept narrow and centered so it
+   reads as a single column of inner monologue, not a sales bullet list. */
+.audience {
+  background: var(--paper-deep);
+  padding: 200px 0;
+  text-align: center;
+}
+.aud-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+.aud-kicker {
+  display: inline-block;
+  font-family: var(--serif-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--ink-mute);
+  margin-bottom: 80px;
+}
+.aud-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 0;
+  max-width: 640px;
+  text-align: left;
+}
+.aud-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.aud-list .aud-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.aud-bullet {
+  font-family: var(--serif-en);
+  color: var(--gold);
+  font-size: 22px;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0;
+}
+.aud-text {
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 2.0;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+.aud-close {
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 2.0;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin: 80px auto 56px;
+}
+.cta.cta-quiet {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+}
+
+/* ============ Contact assurance list ============ */
+.contact-assure {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 56px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.contact-assure li {
+  font-family: var(--serif-jp);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  padding-left: 22px;
+  position: relative;
+}
+.contact-assure li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  color: var(--gold);
+  font-size: 22px;
+  font-family: var(--serif-en);
+  line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+  .audience { padding: 140px 0; }
+  .aud-kicker { margin-bottom: 56px; }
+  .aud-close { margin: 56px auto 40px; }
+}
+@media (max-width: 720px) {
+  .audience { padding: 96px 0; }
+  .aud-inner { padding: 0 28px; }
+  .aud-kicker { font-size: 11px; letter-spacing: 0.18em; margin-bottom: 48px; }
+  .aud-text { font-size: 14px; line-height: 1.95; }
+  .aud-bullet { font-size: 18px; }
+  .aud-item { padding: 18px 0; gap: 12px; grid-template-columns: 18px 1fr; }
+  .aud-close { font-size: 16px; line-height: 1.95; margin: 48px auto 36px; }
+  .cta-secondary { display: block; margin-left: 0; margin-top: 20px; font-size: 12px; }
+  .contact-assure { gap: 10px; margin: 20px 0 40px; }
+  .contact-assure li { font-size: 13px; line-height: 1.8; padding-left: 18px; }
+}

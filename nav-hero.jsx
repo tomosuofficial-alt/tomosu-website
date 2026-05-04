@@ -2,6 +2,7 @@ const NAV_ITEMS = [
   { id: 'philosophy', label: 'Philosophy', jp: '理念' },
   { id: 'about', label: 'About', jp: '代表' },
   { id: 'services', label: 'Services', jp: '支援' },
+  { id: 'training', label: 'Training', jp: '研修' },
   { id: 'works', label: 'Works', jp: '実績' },
   { id: 'flow', label: 'Flow', jp: '流れ' },
   { id: 'journal', label: 'Journal', jp: '発信' },
@@ -120,7 +121,7 @@ const Nav = () => {
               <a key={n.id} href={`#${n.id}`} className={active === n.id ? 'active' : ''} onClick={scrollToId(n.id)}>{n.label}</a>
             ))}
           </nav>
-          <a className="nav-cta" href="#contact" onClick={scrollToId('contact')}>初回無料ヒアリング</a>
+          <a className="nav-cta" href="#contact" onClick={scrollToId('contact')}>無料相談（60分）</a>
           <button
             type="button"
             className={`nav-burger ${menuOpen ? 'is-open' : ''}`}
@@ -165,7 +166,7 @@ const Nav = () => {
           </nav>
           <div className="mobile-menu-foot">
             <a className="mobile-menu-cta" href="#contact" onClick={goto('contact')}>
-              初回無料ヒアリングを予約する
+              無料相談を申し込む（60分）
               <span className="en">Book a free first session</span>
             </a>
             <div className="mobile-menu-meta">
@@ -187,8 +188,9 @@ const Hero = () => (
         <span>Tomosu. — Business Consulting, Gunma</span>
       </div>
       <h1 className="hero-title">経営者を、<br/>ひとりにしない。</h1>
-      <p className="hero-sub">地域の事業に、次の一歩を照らす灯りを。</p>
-      <a className="cta" onClick={scrollToId('contact')}>初回無料ヒアリングを予約する</a>
+      <p className="hero-sub">群馬の中小企業・飲食店経営者へ。<br/>月次の意思決定に、隣で立つ伴走者を。</p>
+      <a className="cta" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
+      <a className="cta-secondary" onClick={scrollToId('services')}>単発で相談したい方は、スポット相談（¥10,000 / 1h）→</a>
       <div className="hero-foot">
         <div className="left">
           Takashi Ouchi<br/>
@@ -199,6 +201,34 @@ const Hero = () => (
           Online &nbsp;·&nbsp; Nationwide
         </div>
       </div>
+    </div>
+  </section>
+);
+
+const AUDIENCE_LINES = [
+  '売上は伸びている。けれど、これでいいのか相談できる相手がいない。',
+  '現場は回っている。けれど、次の一手が見えない。',
+  'コンサルに頼んだが、現場を知らない人の言葉が響かなかった。',
+  '制作会社に頼んだが、作って終わりで「回す」までは見てもらえない。',
+  '社長業が、いつの間にか孤独になっていた。',
+];
+
+const Audience = () => (
+  <section id="audience" className="audience">
+    <div className="aud-inner">
+      <span className="aud-kicker">— こんな状況で、ご相談をいただいています</span>
+      <ul className="aud-list">
+        {AUDIENCE_LINES.map((line, i) => (
+          <li key={i} className="aud-item">
+            <span className="aud-bullet" aria-hidden="true">·</span>
+            <span className="aud-text">{line}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="aud-close">
+        どれかひとつでも頷いた方は、<br/>一度、お話を聞かせてください。
+      </p>
+      <a className="cta cta-quiet" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
     </div>
   </section>
 );
@@ -264,4 +294,4 @@ const Philosophy = () => {
   );
 };
 
-Object.assign(window, { Nav, MorphLogo, Hero, Philosophy, scrollToId, NAV_ITEMS });
+Object.assign(window, { Nav, MorphLogo, Hero, Audience, Philosophy, scrollToId, NAV_ITEMS });
