@@ -99,6 +99,19 @@ const SERVICES = [
     items: ['現状整理', '意思決定サポート', '壁打ち', '専門家紹介'],
     photoImg: 'assets/services/service-03-spot-cafe.webp',
   },
+  {
+    num: 'iv.',
+    kind: 'Product',
+    title: 'シタク',
+    en: 'SHITAKU — Event Booth App',
+    price: '¥9,800', priceSuffix: '/年',
+    note: '最初の1イベントは無料',
+    desc: 'イベント出店の準備から当日、振り返りまでをスマホ1台に。売れた数をその場で数え、原価と粗利まで自動で出します。相談ではなく、置いていける道具として。',
+    items: ['売上をその場で記録', '複数の売り場で共有', '発注量の自動計算', '配置図・担当表の印刷', '粗利と振り返り'],
+    photoImg: 'assets/services/service-04-shitaku.webp',
+    href: 'https://shitaku.tomosu-inc.com',
+    cta: '無料で試す',
+  },
 ];
 
 const Services = () => (
@@ -106,7 +119,7 @@ const Services = () => (
     <section id="services" className="services">
       <div className="sec-header" style={{ maxWidth: 1320, margin: '0 auto 40px', padding: '0 64px' }}>
         <span className="section-number num">III. — Services</span>
-        <h2 className="sec-title" style={{ marginTop: 32 }}>経営の距離に合わせて、<br/>三つの伴走のかたち。</h2>
+        <h2 className="sec-title" style={{ marginTop: 32 }}>経営の距離に合わせて、<br/>伴走のかたちと、置いていく道具。</h2>
       </div>
       {SERVICES.map((s, i) => (
         <div className="svc-row" key={i}>
@@ -114,7 +127,7 @@ const Services = () => (
             <div className="svc-photo photo-slot">
               <img src={s.photoImg} alt={s.title} className="photo-slot-img"/>
             </div>
-            <span className="svc-num">{s.num}</span>
+            <span className="svc-num">{s.num}{s.kind ? ` — ${s.kind}` : ''}</span>
             <h3 className="svc-title">{s.title}</h3>
             <span className="svc-title-en">{s.en}</span>
             <div className="svc-price">
@@ -132,7 +145,9 @@ const Services = () => (
                 </li>
               ))}
             </ul>
-            <a className="cta" onClick={scrollToId('contact')}>このサービスについて相談する</a>
+            {s.href
+              ? <a className="cta" href={s.href} target="_blank" rel="noopener">{s.cta || '詳しく見る'}</a>
+              : <a className="cta" onClick={scrollToId('contact')}>このサービスについて相談する</a>}
           </div>
         </div>
       ))}
