@@ -3,7 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "fetch:journal": "node build/fetch-journal.mjs",
+    "prebuild": "node build/fetch-journal.mjs",
+    "build": "node build/build.mjs && node build/package-static.mjs",
+    "check": "node build/check.mjs",
+    "check:hydration": "node build/hydration-check.mjs",
+    "check:motion": "node build/motion-check.mjs",
+    "check:preview": "node build/serve-check.mjs",
+    "verify": "npm run build && npm run check && npm run check:hydration && npm run check:motion && npm run check:preview"
+  },
   "dependencies": {
     "resend": "^4.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "jsdom": "^25.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

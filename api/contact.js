@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const TYPE_LABELS = {
   advisory: '顧問コンサルティング',
   project: 'プロジェクト型支援',
@@ -78,6 +76,9 @@ ${message}
 tomosu-inc.com の問い合わせフォームより`;
 
   try {
+    // Validate requests even in previews where email delivery is not configured.
+    // Instantiate only when a valid submission actually needs the provider.
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const { data, error } = await resend.emails.send({
       from: '"TOMOSU." <info@tomosu-inc.com>',
       to: ['tomosu.official@gmail.com'],

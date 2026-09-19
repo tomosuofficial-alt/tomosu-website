@@ -10,7 +10,7 @@ const Flow = () => (
   <section id="flow" className="flow">
     <div className="flow-inner">
       <div style={{ marginBottom: 120, maxWidth: 680 }}>
-        <span className="section-number">VI. — Flow</span>
+        <span className="section-number"> Flow</span>
         <h2 className="sec-title" style={{ marginTop: 32 }}>まずは、<br/>話を聞かせてください。</h2>
         <p style={{ fontFamily: 'var(--serif-jp)', fontWeight: 300, fontSize: 16, lineHeight: 2.3, letterSpacing: '0.08em', color: 'var(--ink-soft)', marginTop: 48, maxWidth: 540 }}>
           初回ヒアリングは無料60分。合わないと判断すれば、<br/>正直にそう申し上げます。
@@ -58,7 +58,7 @@ const Blog = () => {
       <div className="blog-inner">
         <div className="blog-head-row">
           <div>
-            <span className="section-number">VII. — Journal</span>
+            <span className="section-number"> Journal</span>
             <h2 className="sec-title" style={{ marginTop: 32 }}>経営の現場から、<br/>灯りになる言葉を。</h2>
           </div>
           <a className="text-link" href="/journal">すべての記事を見る</a>
@@ -103,7 +103,7 @@ const Blog = () => {
 };
 
 const Contact = () => {
-  const [form, setForm] = React.useState({ name:'', company:'', email:'', phone:'', type:'', budget:'', message:'', agree: false });
+  const [form, setForm] = React.useState({ name:'', company:'', email:'', phone:'', type:'other', budget:'', message:'', agree: false });
   const [errors, setErrors] = React.useState({});
   const [submitting, setSubmitting] = React.useState(false);
   const [done, setDone] = React.useState(false);
@@ -156,14 +156,14 @@ const Contact = () => {
     <section id="contact" className="contact">
       <div className="contact-inner">
         <div className="contact-head">
-          <span className="section-number">VIII. — Contact</span>
+      <span className="section-number">Contact — 初回無料相談</span>
           <h2 className="contact-title" style={{ marginTop: 32 }}>最初の一歩は、<br/>六十分の対話から。</h2>
           <p className="contact-lede">
             初回ヒアリングは無料です。「まだ課題がはっきりしていない」段階でも構いません。
             現状を整理し、TOMOSU. がお役に立てるか・立てないかを、フラットに考えるところから始めましょう。
           </p>
           <div className="contact-photo photo-slot">
-            <img src="assets/contact/contact-dialogue.webp?v=2" alt="初回ヒアリングの対話風景" className="photo-slot-img"/>
+            <img src="/assets/contact/contact-dialogue.webp?v=2" alt="初回ヒアリングの対話風景" className="photo-slot-img" loading="lazy" decoding="async"/>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ const Contact = () => {
             </div>
             <div className="info-row">
               <span className="k">Base</span>
-              <span className="v">群馬県中心に関東全域</span>
+              <span className="v">群馬県中心に全国対応</span>
             </div>
             <div className="info-row">
               <span className="k">Area</span>
@@ -203,29 +203,29 @@ const Contact = () => {
                 <div className="form-row-2">
                   <div className={`form-field ${errors.name ? 'error' : ''}`}>
                     <div className="form-label"><span className="jp">ご担当者様</span><span className="req">必須</span></div>
-                    <input className="form-input" value={form.name} onChange={set('name')} placeholder="山田 太郎"/>
+                    <input aria-label="ご担当者様（必須）" autoComplete="name" required className="form-input" value={form.name} onChange={set('name')} placeholder="山田 太郎"/>
                     {errors.name && <div className="form-err">{errors.name}</div>}
                   </div>
                   <div className="form-field">
                     <div className="form-label"><span className="jp">会社名 / 屋号</span></div>
-                    <input className="form-input" value={form.company} onChange={set('company')} placeholder="株式会社 ◯◯"/>
+                    <input aria-label="会社名 / 屋号（任意）" autoComplete="organization" className="form-input" value={form.company} onChange={set('company')} placeholder="株式会社 ◯◯"/>
                   </div>
                 </div>
                 <div className="form-row-2">
                   <div className={`form-field ${errors.email ? 'error' : ''}`}>
                     <div className="form-label"><span className="jp">メールアドレス</span><span className="req">必須</span></div>
-                    <input type="email" className="form-input" value={form.email} onChange={set('email')} placeholder="name@example.com"/>
+                    <input aria-label="メールアドレス（必須）" autoComplete="email" required type="email" className="form-input" value={form.email} onChange={set('email')} placeholder="name@example.com"/>
                     {errors.email && <div className="form-err">{errors.email}</div>}
                   </div>
                   <div className="form-field">
                     <div className="form-label"><span className="jp">電話番号</span></div>
-                    <input className="form-input" value={form.phone} onChange={set('phone')} placeholder="090-1234-5678"/>
+                    <input aria-label="電話番号（任意）" autoComplete="tel" type="tel" className="form-input" value={form.phone} onChange={set('phone')} placeholder="090-1234-5678"/>
                   </div>
                 </div>
                 <div className="form-row-2">
                   <div className={`form-field ${errors.type ? 'error' : ''}`}>
                     <div className="form-label"><span className="jp">ご相談内容</span><span className="req">必須</span></div>
-                    <select className="form-select" value={form.type} onChange={set('type')}>
+                    <select aria-label="ご相談内容（必須）" required className="form-select" value={form.type} onChange={set('type')}>
                       <option value="">お選びください</option>
                       <option value="advisory">顧問コンサルティング</option>
                       <option value="project">プロジェクト型支援</option>
@@ -236,7 +236,7 @@ const Contact = () => {
                   </div>
                   <div className="form-field">
                     <div className="form-label"><span className="jp">想定ご予算</span></div>
-                    <select className="form-select" value={form.budget} onChange={set('budget')}>
+                    <select aria-label="想定ご予算（任意）" className="form-select" value={form.budget} onChange={set('budget')}>
                       <option value="">お選びください</option>
                       <option>〜10万円</option>
                       <option>10〜30万円</option>
@@ -248,7 +248,8 @@ const Contact = () => {
                 </div>
                 <div className={`form-field ${errors.message ? 'error' : ''}`}>
                   <div className="form-label"><span className="jp">ご相談内容の詳細</span><span className="req">必須</span></div>
-                  <textarea className="form-textarea" value={form.message} onChange={set('message')} placeholder="現状・課題・目指している状態などを、わかる範囲でご記入ください。"/>
+                  <textarea aria-label="ご相談内容の詳細（必須・20文字以上）" required minLength={20} maxLength={5000} className="form-textarea" value={form.message} onChange={set('message')} placeholder="例：飲食店を経営しています。SNSでの集客を見直したいので、一度相談したいです。"/>
+                  <p className="inquiry-micro">わかる範囲で20文字以上。課題が整理できていなくても大丈夫です。</p>
                   {errors.message && <div className="form-err">{errors.message}</div>}
                 </div>
                 <label className="form-agree">
@@ -261,7 +262,7 @@ const Contact = () => {
                 {errors.submit && <div className="form-err" style={{ marginTop: 16, marginBottom: 8, textAlign: 'center' }}>{errors.submit}</div>}
                 <div className="form-submit-wrap">
                   <button type="submit" className="form-submit" disabled={submitting}>
-                    {submitting ? '送信中 ...' : '初回無料ヒアリングを申し込む'}
+                    {submitting ? '送信中 ...' : '無料相談を申し込む（60分）'}
                   </button>
                 </div>
               </form>
@@ -279,7 +280,7 @@ const Footer = () => (
       <div className="footer-top">
         <div>
           <div className="footer-brand">
-            <img src="assets/logo-light.png" alt="TOMOSU." className="footer-logo-img"/>
+            <img src="/assets/logo-light.png" alt="TOMOSU." className="footer-logo-img" loading="lazy" decoding="async"/>
           </div>
           <p className="footer-tag">
             地域ビジネス支援コンサルタント。<br/>
@@ -290,8 +291,8 @@ const Footer = () => (
         <div>
           <h5>Navigation</h5>
           <ul className="footer-list">
-            {NAV_ITEMS.slice(0, 4).map(n => (
-              <li key={n.id}><a onClick={scrollToId(n.id)}>{n.label} &nbsp;— &nbsp;{n.jp}</a></li>
+            {NAV_ITEMS.filter(n => ['services', 'about', 'works', 'flow'].includes(n.id)).map(n => (
+              <li key={n.id}><a href={`#${n.id}`} onClick={scrollToId(n.id)}>{n.label} &nbsp;— &nbsp;{n.jp}</a></li>
             ))}
           </ul>
         </div>
@@ -299,7 +300,7 @@ const Footer = () => (
           <h5>Contact</h5>
           <ul className="footer-list">
             <li><a href="mailto:info@tomosu-inc.com">info@tomosu-inc.com</a></li>
-            <li>群馬県中心に関東全域</li>
+            <li>群馬県中心に全国対応</li>
             <li>オンライン全国対応</li>
           </ul>
         </div>

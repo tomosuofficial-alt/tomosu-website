@@ -3,17 +3,20 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Journal — TOMOSU.</title>
+<title id="doc-title">Journal — TOMOSU.</title>
 
-<meta name="description" content="TOMOSU. のJournal記事"/>
+<meta id="meta-desc" name="description" content="TOMOSU. のJournal記事"/>
 <meta name="author" content="大内 嵩志 / Takashi Ouchi"/>
 <meta name="theme-color" content="#FAFAF7"/>
-<meta name="robots" content="index, follow"/>
+<meta id="meta-robots" name="robots" content="index, follow"/>
+<link id="canonical-link" rel="canonical" href="https://tomosu-inc.com/journal"/>
 
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="TOMOSU."/>
-<meta property="og:title" content="Journal — TOMOSU."/>
-<meta property="og:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
+<meta id="og-title" property="og:title" content="Journal — TOMOSU."/>
+<meta id="og-desc" property="og:description" content="経営の現場から、灯りになる言葉を。"/>
+<meta id="og-url" property="og:url" content="https://tomosu-inc.com/journal"/>
+<meta id="og-image" property="og:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
 <meta property="og:locale" content="ja_JP"/>
 
 <link rel="icon" href="/assets/icon.png" type="image/png"/>
@@ -22,7 +25,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="/styles.css?v=35"/>
+<link rel="stylesheet" href="/styles.css?v=53"/>
+
+<!-- Vercel Web Analytics -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="legal-page">
   <header class="legal-header">
@@ -35,9 +42,7 @@
   </header>
 
   <main class="legal-main">
-    <div id="journal-content">
-      <div class="journal-loading">記事を読み込んでいます ...</div>
-    </div>
+    <div id="journal-content"><!--ARTICLE:START--><div class="journal-loading">記事を読み込んでいます ...</div><!--ARTICLE:END--></div>
   </main>
 
   <footer class="legal-footer">
@@ -78,15 +83,25 @@
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 
+      // Detail pages may be prerendered at build time. On any failure we keep
+      // that static content rather than blanking it.
+      const hasPrerender = () => !!content.querySelector('.journal-detail-title');
+      const setNoIndex = () => {
+        const rob = document.querySelector('meta[name="robots"]');
+        if (rob) rob.setAttribute('content', 'noindex, follow');
+      };
+
       if (!slug) {
-        content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+        if (!hasPrerender()) content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+        setNoIndex();
         return;
       }
 
       try {
         const r = await fetch(`/api/journal/${encodeURIComponent(slug)}`);
         if (r.status === 404) {
-          content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+          if (!hasPrerender()) content.innerHTML = '<div class="journal-empty">記事が見つかりません</div>';
+          setNoIndex();
           return;
         }
         if (!r.ok) throw new Error('fetch failed');
@@ -109,6 +124,8 @@
         }
         const ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) ogUrl.setAttribute('content', `https://tomosu-inc.com/journal/${item.slug}`);
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute('href', `https://tomosu-inc.com/journal/${item.slug}`);
         if (item.coverImageUrl) {
           const ogImg = document.querySelector('meta[property="og:image"]');
           if (ogImg) ogImg.setAttribute('content', item.coverImageUrl);
@@ -130,10 +147,10 @@
         `;
       } catch (err) {
         console.error(err);
-        content.innerHTML = '<div class="journal-empty">記事の読み込みに失敗しました</div>';
+        if (!hasPrerender()) content.innerHTML = '<div class="journal-empty">記事の読み込みに失敗しました</div>';
       }
     })();
   </script>
-  <script src="/dev-reload.js?v=35"></script>
+  <script src="/dev-reload.js?v=53"></script>
 </body>
 </html>
