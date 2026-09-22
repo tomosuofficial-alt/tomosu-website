@@ -283,7 +283,7 @@ const Philosophy = () => {
           </p>
         </div>
         <div ref={photoRef} className="phil-photo phil-photo--lit photo-slot photo-slot--dark" style={{ ['--lit']: 0 }}>
-          <img src="assets/scenes/philosophy-night-shop.webp?v=2" alt="夜の群馬の裏道に灯る小さな店" className="photo-slot-img"/>
+          <img src="assets/scenes/philosophy-night-shop.webp?v=2" alt="夜の群馬の裏道に灯る小さな店" className="photo-slot-img" loading="lazy" decoding="async"/>
           <div className="phil-photo__dim" aria-hidden="true"></div>
           <div className="phil-photo__lights" aria-hidden="true"></div>
           <div className="phil-photo__glow" aria-hidden="true"></div>

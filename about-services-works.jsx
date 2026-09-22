@@ -10,11 +10,11 @@ const About = () => (
   <section id="about" className="about">
     <div className="about-grid">
       <div className="about-portrait">
-        <img src="assets/profile.webp?v=3" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img"/>
+        <img src="/assets/profile.webp?v=3" alt="大内 嵩志 Takashi Ouchi" className="about-portrait-img" loading="lazy" decoding="async"/>
         <div className="label">Takashi Ouchi</div>
       </div>
       <div className="about-content">
-        <div className="about-kicker">II. — About</div>
+        <div className="about-kicker"> About</div>
         <h2 className="about-title">
           現場で、経営のすべてを背負った<br/>
           人間だからこそ、伴走できる。
@@ -40,10 +40,10 @@ const About = () => (
 
     <div className="about-scenes">
       <div className="about-scene photo-slot">
-        <img src="assets/about/about-onsite-01-kitchen.webp" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img"/>
+        <img src="/assets/about/about-onsite-01-kitchen.webp" alt="厨房・カウンターに立つ大内嵩志" className="photo-slot-img" loading="lazy" decoding="async"/>
       </div>
       <div className="about-scene photo-slot">
-        <img src="assets/about/about-onsite-02-dialogue.webp" alt="経営者との対話風景" className="photo-slot-img"/>
+        <img src="/assets/about/about-onsite-02-dialogue.webp" alt="経営者との対話風景" className="photo-slot-img" loading="lazy" decoding="async"/>
       </div>
     </div>
 
@@ -105,14 +105,14 @@ const Services = () => (
   <>
     <section id="services" className="services">
       <div className="sec-header" style={{ maxWidth: 1320, margin: '0 auto 40px', padding: '0 64px' }}>
-        <span className="section-number num">III. — Services</span>
+        <span className="section-number num"> Services</span>
         <h2 className="sec-title" style={{ marginTop: 32 }}>経営の距離に合わせて、<br/>三つの伴走のかたち。</h2>
       </div>
       {SERVICES.map((s, i) => (
         <div className="svc-row" key={i}>
           <div className="svc-left">
             <div className="svc-photo photo-slot">
-              <img src={s.photoImg} alt={s.title} className="photo-slot-img"/>
+              <img src={s.photoImg} alt={s.title} className="photo-slot-img" loading="lazy" decoding="async"/>
             </div>
             <span className="svc-num">{s.num}</span>
             <h3 className="svc-title">{s.title}</h3>
@@ -132,7 +132,7 @@ const Services = () => (
                 </li>
               ))}
             </ul>
-            <a className="cta" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
+            <a className="cta" href="#contact" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
           </div>
         </div>
       ))}
@@ -202,14 +202,14 @@ const TRAININGS = [
 const Training = () => (
   <section id="training" className="services">
     <div className="sec-header" style={{ maxWidth: 1320, margin: '0 auto 40px', padding: '0 64px' }}>
-      <span className="section-number num">IV. — Training</span>
+      <span className="section-number num"> Training</span>
       <h2 className="sec-title" style={{ marginTop: 32 }}>現場で動ける人を、<br/>社内に育てる。</h2>
     </div>
     {TRAININGS.map((s, i) => (
       <div className="svc-row" key={i}>
         <div className="svc-left">
           <div className="svc-photo photo-slot">
-            <img src={s.photoImg} alt={s.title} className="photo-slot-img"/>
+            <img src={s.photoImg} alt={s.title} className="photo-slot-img" loading="lazy" decoding="async"/>
           </div>
           <span className="svc-num">{s.num}</span>
           <h3 className="svc-title">{s.title}</h3>
@@ -229,7 +229,7 @@ const Training = () => (
               </li>
             ))}
           </ul>
-          <a className="cta" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
+          <a className="cta" href="#contact" onClick={scrollToId('contact')}>無料相談を申し込む（60分）</a>
         </div>
       </div>
     ))}
@@ -257,10 +257,135 @@ const COMMISSIONS = [
 
 const Works = () => {
   const [tab, setTab] = React.useState('clients');
+  const marqueeRef = React.useRef(null);
+  const trackRef = React.useRef(null);
+
+  // Clients marquee: keep the auto-scroll but let PC users grab-drag it left/right.
+  // We take over the CSS animation with a rAF loop at the same speed and wrap the
+  // position by the half-width, so dragging composes with the loop and the seam
+  // never jumps. Touch keeps vertical scroll (touch-action: pan-y); reduced-motion
+  // keeps it static (no auto-advance).
+  React.useEffect(() => {
+    if (tab !== 'clients') return;
+    const marquee = marqueeRef.current;
+    const track = trackRef.current;
+    if (!marquee || !track) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let half = track.scrollWidth / 2 || 1;      // width of one CLIENTS set
+    let pos = 0;                                 // scroll offset in px, wrapped to [0, half)
+    let paused = false;                          // hover / focus
+    let dragging = false, captured = false, dragMoved = false;
+    let startX = 0, startPos = 0, pointerId = null;
+    let last = null, raf = 0;
+    const SPEED = half / 42000;                  // px/ms — matches the 42s CSS animation
+    const wrap = (v) => ((v % half) + half) % half;
+    const apply = () => { track.style.transform = `translateX(${-pos}px)`; };
+
+    // Take over from the CSS keyframe animation.
+    track.style.animation = 'none';
+    track.style.willChange = 'transform';
+    track.style.userSelect = 'none';
+    marquee.style.cursor = 'grab';
+    marquee.style.touchAction = 'pan-y';
+    apply();
+
+    const tick = (t) => {
+      if (last == null) last = t;
+      const dt = t - last; last = t;
+      if (!reduce && !paused && !dragging) { pos = wrap(pos + SPEED * dt); apply(); }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    const onEnter = () => { paused = true; };
+    const onLeave = () => { if (!dragging) paused = false; };
+    const onFocusIn = () => { paused = true; };
+    const onFocusOut = () => { if (!marquee.contains(document.activeElement)) paused = false; };
+    const restPaused = () => {
+      // Re-evaluate hover/focus pause once a drag ends.
+      let hover = false;
+      try { hover = marquee.matches(':hover'); } catch (_) {}
+      paused = hover || marquee.contains(document.activeElement);
+    };
+    const onDown = (e) => {
+      if (dragging) return;                        // ignore additional pointers
+      if (e.button != null && e.button !== 0) return;
+      dragging = true; captured = false; dragMoved = false;
+      startX = e.clientX; startPos = pos; pointerId = e.pointerId; paused = true;
+    };
+    const onMove = (e) => {
+      if (!dragging || e.pointerId !== pointerId) return;   // only the active pointer
+      const dx = e.clientX - startX;
+      if (!captured) {
+        if (Math.abs(dx) < 6) return;            // threshold: preserve normal clicks
+        captured = true; dragMoved = true;
+        try { marquee.setPointerCapture(pointerId); } catch (_) {}
+        marquee.style.cursor = 'grabbing';
+      }
+      pos = wrap(startPos - dx);
+      apply();
+    };
+    const endDrag = (e) => {
+      if (!dragging || (e && e.pointerId !== pointerId)) return;
+      dragging = false;
+      if (captured) { try { marquee.releasePointerCapture(pointerId); } catch (_) {} }
+      captured = false; pointerId = null;
+      marquee.style.cursor = 'grab';
+      restPaused();
+    };
+    const onLost = (e) => {
+      if (e && pointerId != null && e.pointerId !== pointerId) return;
+      dragging = false; captured = false; pointerId = null;
+      marquee.style.cursor = 'grab';
+      restPaused();
+    };
+    const onClick = (e) => { if (dragMoved) { e.preventDefault(); e.stopPropagation(); dragMoved = false; } };
+    const onDragStart = (e) => e.preventDefault();   // block native image drag
+    const onResize = () => { half = track.scrollWidth / 2 || 1; pos = wrap(pos); apply(); };
+
+    marquee.addEventListener('pointerenter', onEnter);
+    marquee.addEventListener('pointerleave', onLeave);
+    marquee.addEventListener('focusin', onFocusIn);
+    marquee.addEventListener('focusout', onFocusOut);
+    marquee.addEventListener('pointerdown', onDown);
+    marquee.addEventListener('pointermove', onMove);
+    marquee.addEventListener('lostpointercapture', onLost);
+    marquee.addEventListener('click', onClick, true);
+    marquee.addEventListener('dragstart', onDragStart);
+    marquee.addEventListener('load', onResize, true);  // recompute after lazy images load
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      marquee.removeEventListener('pointerenter', onEnter);
+      marquee.removeEventListener('pointerleave', onLeave);
+      marquee.removeEventListener('focusin', onFocusIn);
+      marquee.removeEventListener('focusout', onFocusOut);
+      marquee.removeEventListener('pointerdown', onDown);
+      marquee.removeEventListener('pointermove', onMove);
+      marquee.removeEventListener('lostpointercapture', onLost);
+      marquee.removeEventListener('click', onClick, true);
+      marquee.removeEventListener('dragstart', onDragStart);
+      marquee.removeEventListener('load', onResize, true);
+      window.removeEventListener('pointerup', endDrag);
+      window.removeEventListener('pointercancel', endDrag);
+      window.removeEventListener('resize', onResize);
+      track.style.animation = '';
+      track.style.transform = '';
+      track.style.willChange = '';
+      track.style.userSelect = '';
+      marquee.style.cursor = '';
+      marquee.style.touchAction = '';
+    };
+  }, [tab]);
+
   return (
     <section id="works" className="works">
       <div className="works-head">
-        <span className="section-number">V. — Works</span>
+        <span className="section-number"> Works</span>
         <h2 className="sec-title" style={{ marginTop: 32 }}>灯してきた、<br/>地域の事業たち。</h2>
       </div>
       <div className="works-tabs-wrap">
@@ -273,19 +398,19 @@ const Works = () => {
       <div className="works-panel">
         {tab === 'clients' && (
           <>
-            <div className="clients-marquee">
-              <div className="clients-track">
+            <div className="clients-marquee" ref={marqueeRef}>
+              <div className="clients-track" ref={trackRef}>
                 {[...CLIENTS, ...CLIENTS].map((c, i) => (
                   <div className="client-chip" key={i}>
                     <div className="client-chip-logo">
                       {c.logo ? (
-                        <img src={c.logo} alt={c.name} className="client-chip-img"/>
+                        <img src={c.logo} alt={c.name} className="client-chip-img" loading="lazy" decoding="async"/>
                       ) : (
                         <span className="client-chip-name">{c.name}</span>
                       )}
                     </div>
                     <div className="client-chip-shot photo-slot">
-                      <img src={c.shotImg} alt={`${c.name} 店舗`} className="photo-slot-img"/>
+                      <img src={c.shotImg} alt={`${c.name} 店舗`} className="photo-slot-img" loading="lazy" decoding="async"/>
                     </div>
                     <div className="client-chip-store">{c.name}</div>
                     <div className="client-chip-company">{c.company} 様</div>
@@ -324,7 +449,7 @@ const Works = () => {
             {SAMPLES.map((s, i) => (
               <div className="sample" key={i}>
                 <div className="sample-img">
-                  {s.img && <img src={s.img} alt={s.title} className="sample-img-pic"/>}
+                  {s.img && <img src={s.img} alt={s.title} className="sample-img-pic" loading="lazy" decoding="async"/>}
                 </div>
                 <div className="sample-info">
                   <span className="sample-idx">Work No. {String(i + 1).padStart(2, '0')}</span>
@@ -343,7 +468,7 @@ const Works = () => {
             {COMMISSIONS.map((c, i) => (
               <div className="comm-row" key={i}>
                 <div className="comm-photo photo-slot">
-                  <img src={c.photoImg} alt={c.title} className="photo-slot-img"/>
+                  <img src={c.photoImg} alt={c.title} className="photo-slot-img" loading="lazy" decoding="async"/>
                 </div>
                 <div className="comm-idx">No. {String(i + 1).padStart(2, '0')}</div>
                 <div className="comm-title">{c.title}</div>
@@ -403,7 +528,7 @@ const VOICES = [
 const Voice = () => (
   <section id="voice" className="voice">
     <div className="voice-header">
-      <span className="section-number">VI. — Voice</span>
+      <span className="section-number"> Voice</span>
       <div className="voice-rule"></div>
       <h2 className="voice-heading">伴走してきた、<br/>経営者の声。</h2>
     </div>
@@ -412,7 +537,7 @@ const Voice = () => (
         <div className="voice-card" key={i}>
           <div className={`voice-card-photo ${v.img ? '' : 'photo-slot photo-slot--square'}`} role="img" aria-label={`${v.name} の顔写真 / 店舗写真（予定地）`}>
             {v.img
-              ? <img src={v.img} alt={v.name} className="voice-card-img"/>
+              ? <img src={v.img} alt={v.name} className="voice-card-img" loading="lazy" decoding="async"/>
               : <span className="photo-slot-label">顔写真 / 店舗</span>
             }
           </div>

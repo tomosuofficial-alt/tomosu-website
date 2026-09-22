@@ -9,6 +9,7 @@
 <meta name="author" content="大内 嵩志 / Takashi Ouchi"/>
 <meta name="theme-color" content="#FAFAF7"/>
 <meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://tomosu-inc.com/journal"/>
 
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="TOMOSU."/>
@@ -18,19 +19,23 @@
 <meta property="og:image" content="https://tomosu-inc.com/assets/TOMOSU-logo.png"/>
 <meta property="og:locale" content="ja_JP"/>
 
-<link rel="icon" href="assets/icon.png" type="image/png"/>
-<link rel="apple-touch-icon" href="assets/icon.png"/>
+<link rel="icon" href="/assets/icon.png" type="image/png"/>
+<link rel="apple-touch-icon" href="/assets/icon.png"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css?v=36"/>
+<link rel="stylesheet" href="/styles.css?v=53"/>
+
+<!-- Vercel Web Analytics -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="legal-page">
   <header class="legal-header">
     <div class="legal-header-inner">
       <a href="/" class="legal-logo" aria-label="TOMOSU. トップへ戻る">
-        <img src="assets/logo-dark.png" alt="TOMOSU."/>
+        <img src="/assets/logo-dark.png" alt="TOMOSU."/>
       </a>
       <a href="/" class="legal-back">← Back to Home</a>
     </div>
@@ -41,16 +46,57 @@
     <h1 class="legal-title">経営の現場から、<br/>灯りになる言葉を。</h1>
     <div class="legal-title-en">Journal — Notes from the field</div>
 
-    <div id="journal-list" class="journal-list">
-      <div class="journal-loading">記事を読み込んでいます ...</div>
-    </div>
+    <div id="journal-list" class="journal-list"><!--JOURNAL_LIST:START-->
+          <a class="journal-item" href="/journal/keiei-no-akari">
+            <div class="journal-item-date">2026.04.27</div>
+            <div class="journal-item-cat">Essay</div>
+            <div class="journal-item-title">経営者の一歩を、灯りに変える。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/gemba-no-nioi">
+            <div class="journal-item-date">2026.04.20</div>
+            <div class="journal-item-cat">Essay</div>
+            <div class="journal-item-title">現場の匂いから、経営は始まる。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/manual-mawasu-tame">
+            <div class="journal-item-date">2026.04.13</div>
+            <div class="journal-item-cat">Column</div>
+            <div class="journal-item-title">マニュアルは「作る」ためではなく、「回す」ためにある。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/niku-fes-300man">
+            <div class="journal-item-date">2026.04.06</div>
+            <div class="journal-item-cat">Case Study</div>
+            <div class="journal-item-title">肉フェス二日で約300万円——Bistro knocks との出店設計。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/sns-mise-no-kuki">
+            <div class="journal-item-date">2026.03.30</div>
+            <div class="journal-item-cat">Column</div>
+            <div class="journal-item-title">SNSは「投稿の質」ではなく、「店の空気」で決まる。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/kirizumi-brewery-launch">
+            <div class="journal-item-date">2026.03.23</div>
+            <div class="journal-item-cat">News</div>
+            <div class="journal-item-title">霧積ブルワリー レストラン部門の立ち上げ伴走を完了しました。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+          <a class="journal-item" href="/journal/hitori-no-yoru">
+            <div class="journal-item-date">2026.03.16</div>
+            <div class="journal-item-cat">Essay</div>
+            <div class="journal-item-title">ひとりで判断する夜のために、灯りはある。</div>
+            <div class="journal-item-more">Read →</div>
+          </a>
+        <!--JOURNAL_LIST:END--></div>
   </main>
 
   <footer class="legal-footer">
     <div class="legal-footer-inner">
       <div class="legal-footer-top">
         <a href="/" class="legal-footer-logo" aria-label="TOMOSU. トップへ戻る">
-          <img src="assets/logo-light.png" alt="TOMOSU."/>
+          <img src="/assets/logo-light.png" alt="TOMOSU."/>
         </a>
         <nav class="legal-footer-links">
           <a href="/">Home</a>
@@ -80,6 +126,10 @@
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 
+      // If the list was prerendered at build time, keep that content on any
+      // failure instead of blanking a good page.
+      const hasPrerender = () => !!list.querySelector('.journal-item');
+
       try {
         const r = await fetch('/api/journal?limit=50');
         if (!r.ok) throw new Error('fetch failed');
@@ -87,7 +137,7 @@
         const items = (data.items || []).filter((i) => i.slug);
 
         if (items.length === 0) {
-          list.innerHTML = '<div class="journal-empty">記事を準備しています</div>';
+          if (!hasPrerender()) list.innerHTML = '<div class="journal-empty">記事を準備しています</div>';
           return;
         }
 
@@ -101,10 +151,10 @@
         `).join('');
       } catch (err) {
         console.error(err);
-        list.innerHTML = '<div class="journal-empty">記事の読み込みに失敗しました</div>';
+        if (!hasPrerender()) list.innerHTML = '<div class="journal-empty">記事の読み込みに失敗しました</div>';
       }
     })();
   </script>
-  <script src="/dev-reload.js?v=36"></script>
+  <script src="/dev-reload.js?v=53"></script>
 </body>
 </html>
